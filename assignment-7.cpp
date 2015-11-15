@@ -32,8 +32,16 @@ Do you want to perform additional operations on the existing file (Y/N)? N
 Do you want to work with another file (Y/N)? Y
 
 */
+	
 void runProgram() {
-
+	using namespace std;
+	char user_input[100];
+	
+	
+	//prompt file
+	cout << "Enter the file that you would like to work with: ";
+	cin >> user_input;
+	cout << user_input;
 
 
 
@@ -59,7 +67,8 @@ Poly::Poly(char* str) {
 			if (*(str + 1) == '^') {
 				for (int j = 2; ((*(str + j) != '-') && (*(str + j) != '+')); j++) {
 					poly_degree *= 10;
-					poly_degree += atoi((const char *)*(str + j));
+					poly_degree += (*(str + j)-'0'); // not atoi(). 1 char @ a time.
+					
 				}
 			}
 		}
@@ -76,28 +85,28 @@ Poly::Poly(char* str) {
 
 	//Parsing for Cofficient.
 	cp = poly_buffer;
-	while (*cp != NULL) {
+	while (*cp != '\0') {
 		int temp_index = 0;
-		while ((*cp != NULL) && (*cp != 'x')) {
+		while ((*cp != '\0') && (*cp != 'x')) {
 			temp_buffer[temp_index++] = *cp++;
 		}
 		coeff_buffer[count++] = strtod(temp_buffer, NULL);
-		while ((*cp != NULL) && (*cp != '+') && (*cp != '-'))
+		while ((*cp != '\0') && (*cp != '+') && (*cp != '-'))
 			cp++;
 	}
 
 	//Parsing for Power.
 	cp = poly_buffer; count = 0;
-	while (*cp != NULL) {
+	while (*cp != '\0') {
 		int temp_index = 0;
-		while ((*cp != NULL) && (*cp != 'x'))
+		while ((*cp != '\0') && (*cp != 'x'))
 			cp++;
-		if (*cp == NULL)
+		if (*cp == '\0')
 			pow_buffer[count++] = 0;
 		else if ((*cp == 'x') && (*(cp + 1) != '^'))
 			pow_buffer[count++] = 0;
 		else {
-			while ((*cp != NULL) && (*cp != '+') && (*cp != '-')) {
+			while ((*cp != '\0') && (*cp != '+') && (*cp != '-')) {
 				temp_buffer[temp_index++] = *cp++;//dangerous??
 			}
 			pow_buffer[count++] = (int) strtod(temp_buffer, NULL);
