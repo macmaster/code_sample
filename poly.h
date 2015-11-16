@@ -1,7 +1,7 @@
 typedef struct Node {
 	double coeff;
 	int degree;
-	Node* next;
+	Node* next; 
 } Node;
 
 // function where the interactive menu should be implemented

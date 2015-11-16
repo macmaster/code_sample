@@ -6,12 +6,17 @@
 
 #include <iostream>
 #include "poly.h"
+#include <cstdio>
+
+
 using namespace std;
 
 // very simple test
+#ifdef DEBUG
 void test1() {
-	Poly p1("3x^2 + 2x + 1");
-	Poly p2("1x + 2");
+	
+	Poly p1((char*)"3x^2 + 2x + 1");
+	Poly p2((char*)"1x + 2");
 	Poly *p3 = p1.multiply(p2);
 	Poly *p4 = p1.add(p2);
 
@@ -29,8 +34,10 @@ void test1() {
 		cout << "test1 passed\n";
 	}
 }
-
+#endif
 int main() {
-	test1();
+	Poly p1((char*)"000000000003x^67 + 2.787687");
+	p1.print();
+	//test1();
 	//runProgram();
 }

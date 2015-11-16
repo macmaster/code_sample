@@ -1,10 +1,13 @@
 #include "poly.h"
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
 
+
+#define DEBUG
 
 // Main function of your program - called by main
 
@@ -32,17 +35,37 @@ Do you want to perform additional operations on the existing file (Y/N)? N
 Do you want to work with another file (Y/N)? Y
 
 */
-	
+
+#ifndef DEBUG
 void runProgram() {
 	using namespace std;
 	char user_input[100];
-	
+	int poly_count;
 	
 	//prompt file
 	cout << "Enter the file that you would like to work with: ";
 	cin >> user_input;
-	cout << user_input;
 
+	//read file
+	ifstream poly_file;
+	poly_file.open(user_input);
+	
+	//optioinal: test poly_file.is_open();
+	poly_file >> poly_count;
+	for(int = poly_count);
+	
+	
+	
+	cout << "The polynomials available for operation are: "
+	
+	for(int i = 1; i <= poly_count; i++){
+		cout << i << ". ";
+	}
+	
+	poly_file.close();
+	
+	
+	
 
 
 	// repeatedly prompt the user and process the selected
@@ -50,35 +73,45 @@ void runProgram() {
 	// operation until the user selects the quit option. 
 
 }
+#endif
 
 Poly::Poly(char* str) {
 
 	char *temp_buffer = (char *)malloc(sizeof(char) * strlen(str));
 	char *poly_buffer = (char *)malloc(sizeof(char) * strlen(str));
 	bool found_degree = false;
-
+			#ifdef DEBUG
+	printf("Making poly: %s\n", str);
+			#endif
 	//removing whitespace / set poly degree
 	poly_degree = 0;
-	for (int i = 0; !str; str++) {
-		if (*str != ' ') {
+	for (int i = 0; *str; str++) {
+	if (*str != ' ') {
 			poly_buffer[i++] = *str;
 		}
 		if ((*str == 'x') && (!found_degree)) {
 			if (*(str + 1) == '^') {
-				for (int j = 2; ((*(str + j) != '-') && (*(str + j) != '+')); j++) {
+				for (int j = 2; ((*(str + j) != '-') && (*(str + j) != '+') && (*(str + j) != ' ')); j++) {
 					poly_degree *= 10;
 					poly_degree += (*(str + j)-'0'); // not atoi(). 1 char @ a time.
-					
+					printf("*str = %c\n", *(str+j));
 				}
+				found_degree = true;
 			}
-		}
-			else {
+			else if(!found_degree){
+				printf("*str = %c\n", *str);
 				poly_degree = 1;
 				found_degree = true;
 			}
+		}
 	}
+		#ifdef DEBUG
+	printf("poly buffer: %s\n", poly_buffer);
+	printf("poly degree: %d\n", poly_degree);
+	#endif
 
-	double *coeff_buffer = (double *)malloc(sizeof(int) * (poly_degree + 1));
+
+	double *coeff_buffer = (double *)malloc(sizeof(double) * (poly_degree + 1));
 	int *pow_buffer = (int *)malloc(sizeof(int) * (poly_degree + 1));
 	char *cp;
 	int count = 0;
@@ -94,39 +127,61 @@ Poly::Poly(char* str) {
 		while ((*cp != '\0') && (*cp != '+') && (*cp != '-'))
 			cp++;
 	}
-
+	
 	//Parsing for Power.
 	cp = poly_buffer; count = 0;
 	while (*cp != '\0') {
 		int temp_index = 0;
-		while ((*cp != '\0') && (*cp != 'x'))
+	
+		while ((*cp != '\0') && (*cp != 'x')){
+			printf("poly buffer: %s\n", cp);
 			cp++;
+		}
+						
 		if (*cp == '\0')
 			pow_buffer[count++] = 0;
-		else if ((*cp == 'x') && (*(cp + 1) != '^'))
-			pow_buffer[count++] = 0;
+		else if ((*cp == 'x') && (*(cp + 1) != '^')){
+			cp += 1;//skip over x
+			pow_buffer[count++] = 1;
+		}
+			
 		else {
+			cp += 2;//skip over the x^
 			while ((*cp != '\0') && (*cp != '+') && (*cp != '-')) {
+				printf("poly buffer: %s\n", cp);
 				temp_buffer[temp_index++] = *cp++;//dangerous??
 			}
-			pow_buffer[count++] = (int) strtod(temp_buffer, NULL);
+			temp_buffer[temp_index] = '\0';// null terminate the temp buffer
+			
+			printf("temp buffer b4 convert: %s\n", temp_buffer);
+			pow_buffer[count++] = atoi(temp_buffer);
+			printf("pow buffer: %d\n", pow_buffer[count-1]);
 		}
 	}
-
+	
+	#ifdef DEBUG
+	printf("\n\nPOST PARSE:\n");
+	printf("poly buffer: %s\n", poly_buffer);
+	for(int i = 0; i < (count); i++)
+		printf("coeff buffer: %lf\n", coeff_buffer[i]);
+	for(int i = 0; i < (count); i++)
+		printf("pow buffer: %d\n", pow_buffer[i]);
+	#endif
+	
 	//make poly nodes
 	Node *prev_node, *current_node, *head_node;
-
 	head_node = poly_ptr = new Node;
 	head_node->coeff = coeff_buffer[0];
 	head_node->degree = pow_buffer[0];
 	prev_node = head_node;
+	printf("passed init node\n");
 	for (int i = 1; i < count; i++) {
 		current_node = new Node;
 		current_node->coeff = coeff_buffer[i];
 		current_node->degree = pow_buffer[i];
 		prev_node->next = current_node;
 	}
-
+	printf("made new nodes ok\n");
 	//clean for zero	
 	this->clean();
 	//free buffers
@@ -134,7 +189,8 @@ Poly::Poly(char* str) {
 	free(poly_buffer);
 	free(coeff_buffer);
 	free(pow_buffer);
-
+	
+	
 }
 
 Poly::~Poly() {
@@ -246,7 +302,7 @@ double Poly::eval(int x) {
 void Poly::print() {
 	Node *current_node = this->poly_ptr;
 	if (!current_node) {
-		printf("0\n"); // 0 polynomial
+		printf("0"); // 0 polynomial
 		return;
 	}
 	//initial print
@@ -296,20 +352,27 @@ bool Poly::equals(Poly& otherPoly) {
 }
 
 void Poly::clean() {
-	Node *head_node, *current_node, *prev_node, *next_node;
-	head_node = this->poly_ptr;
-	current_node = head_node;
+	Node *current_node, *prev_node, *next_node;
+	current_node = this->poly_ptr;
 	while ((current_node) && (current_node->coeff == 0)) {
 		prev_node = current_node;
 		current_node = current_node->next;
 		free(prev_node);
 	}
 	this->poly_ptr = current_node;
-	this->poly_degree = current_node->degree;
+	if(current_node != NULL)
+		this->poly_degree = current_node->degree;//bug
+	else
+		this->poly_degree = 0; // 0 polynomial has zero degree
+	printf("made it safely!\n");
+	
 	prev_node = this->poly_ptr;
 	if (prev_node) {
 		current_node = prev_node->next;
 	}
+	
+		printf("clean test 1!\n");
+	
 	while ((prev_node) && (current_node)) {
 		if (current_node->coeff == 0) {
 			prev_node->next = current_node->next;
@@ -321,4 +384,5 @@ void Poly::clean() {
 			current_node = current_node->next;
 		}
 	}
+	printf("clean test 2!\n");
 }
