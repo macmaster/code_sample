@@ -58,7 +58,7 @@ Thank you for using this program!
 void runProgram() {
 	using namespace std;
 	char user_input[100];
-	int poly_count;
+	int poly_count, poly_op;
 	
 	//prompt file
 	cout << "Enter the file that you would like to work with: ";
@@ -76,7 +76,7 @@ void runProgram() {
 	Poly **poly_array = new Poly*[poly_count];
 	for(int i = 0; i < poly_count; i++){
 		poly_file.getline(user_input, 100);
-		cout << "user input: " << user_input << endl;
+		//cout << "user input: " << user_input << endl;
 		poly_array[i] = new Poly(user_input);
 	}
 	cout << "The polynomials available for operation are: " << endl;
@@ -89,26 +89,46 @@ void runProgram() {
 	
 	poly_file.close();
 	
+	//operations menu
+	cout << "What operation would you like to perform?" << endl;
+	cout << "1. ADD polynomials"			 << endl;
+	cout << "2. MULTIPLY polynomials"	 << endl;
+	cout << "3. EVALUATE polynomial"	 << endl;
+	
+	cout << endl << "Enter choice #: " << endl;
+	cin >> poly_op;
+	
+	int input1, input2;
+	
+	switch(poly_op){
+		case 1://add polys
+			cout << "Enter the two polynomials that you would like to work with: " << endl;
+			break;
+		case 2://mult polys
+			cout << "Enter the two polynomials that you would like to work with: " << endl;
+			break;
+		case 3://eval poly
+			cout << "Enter the polynomial that you would like to work with: " << endl;
+			break;
+		default:
+			cerr << "Invalid Polynomial Operation!" << endl;
+	}
+	
 	// loop and delete memory pointed to by poly pointers before deleting array
 	for(int i = 0; i < poly_count; i++){
 		delete poly_array[i];
 	}
 	delete[] poly_array;
-
-
-	// repeatedly prompt the user and process the selected
-
-	// operation until the user selects the quit option. 
-
 }
 #endif
+
 Poly::Poly(){
 	using namespace std;
 	cout << "calling deefault constructor "<< endl;
 }
 Poly::Poly(char* str) {
 	using namespace std;
-	cout << "calling poly constructor" << endl;
+	//cout << "calling poly constructor" << endl;
 
 	char *temp_buffer = (char *)malloc(sizeof(char) * (strlen(str)+1));
 	char *poly_buffer = (char *)malloc(sizeof(char) * (strlen(str)+1));
@@ -226,7 +246,7 @@ Poly::Poly(char* str) {
 
 Poly::~Poly() {
 	using namespace std;
-	cout << "calling deestructor "<< endl;
+	//cout << "calling deestructor "<< endl;
 	//free not only poly_ptr, free the nodes
 	Node *current_node = this->poly_ptr, *temp_node;
 	while (current_node) {
