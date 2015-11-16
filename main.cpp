@@ -8,7 +8,6 @@
 #include "poly.h"
 #include <cstdio>
 
-#define TEST_EVAL
 
 using namespace std;
 
@@ -52,11 +51,11 @@ int main() {
 	#ifdef TEST_EVAL
 	printf("Polynomial evaluated: ");
 	int x = 3;
-	Poly p1((char*)"-20x^2+1x+60");
+	Poly p1((char*)"-20.x^2+1x+60");
 	p1.print();putchar('\n');
 	for(int i = 0; i < 10; i++)
 	printf("When x = %d, f(x) = %lf\n", x, p1.eval(x));
 	#endif
 	//test1();
-	//runProgram();
+runProgram();
 }

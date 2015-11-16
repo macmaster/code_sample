@@ -6,10 +6,7 @@
 #include <cmath>
 #include <cstring>
 
-
-#undef DEBUG
-
-// Main function of your program - called by main
+#define RUN_PROG
 
 /*
 Enter the file that you would like to work with: ptest1.txt
@@ -31,9 +28,30 @@ What operation would you like to perform?
 2. MULTIPLY polynomials
 3. EVALUATE polynomial
 
+Enter choice #: 2
+Enter the two polynomials that you would like to work with: 1,2
+The symbolic product of the 2 polynomials is:
+32.0x^9 + 16.0x^8 + -16.0x^7 + -20.0x^6 + 52.0x^5 + 38.0x^4 + -6.0x^3
++ -6.0x^2 + 9.0x + 27.0
 Do you want to perform additional operations on the existing file (Y/N)? N
 Do you want to work with another file (Y/N)? Y
+Enter the file that you would like to work with: ptest2.txt
+The polynomials available for operation are:
+1. 2.0x^5 + -1.0x^3 + 2.0x + 3.0
+2. 3.0x^4 + 4.0x^3 + -3.0x + 9.0
+3. 1.0x^6 + 4.0x^3 + -1.0x + 9.0
+What operation would you like to perform?
+1. ADD polynomials
+2. MULTIPLY polynomials
+3. EVALUATE polynomial
 
+Enter choice #: 3
+Enter the polynomial that you would like to work with: 2
+Enter the evaluation point (the value of x): 2
+Value of that polynomial at 2.0 is: 83.0
+Do you want to perform additional operations on the existing file (Y/N)? N
+Do you want to work with another file (Y/N)? N
+Thank you for using this program!
 */
 
 #ifdef RUN_PROG
@@ -52,20 +70,30 @@ void runProgram() {
 	
 	//optioinal: test poly_file.is_open();
 	poly_file >> poly_count;
-	for(int = poly_count);
+	poly_file.ignore(1); // ignore newline char
 	
+	//create poly array
+	Poly **poly_array = new Poly*[poly_count];
+	for(int i = 0; i < poly_count; i++){
+		poly_file.getline(user_input, 100);
+		cout << "user input: " << user_input << endl;
+		poly_array[i] = new Poly(user_input);
+	}
+	cout << "The polynomials available for operation are: " << endl;
 	
-	
-	cout << "The polynomials available for operation are: "
-	
-	for(int i = 1; i <= poly_count; i++){
-		cout << i << ". ";
+	for(int i = 0; i < poly_count; i++){
+		cout << i + 1 << ". ";
+		poly_array[i]->print();
+		cout << endl;
 	}
 	
 	poly_file.close();
 	
-	
-	
+	// loop and delete memory pointed to by poly pointers before deleting array
+	for(int i = 0; i < poly_count; i++){
+		delete poly_array[i];
+	}
+	delete[] poly_array;
 
 
 	// repeatedly prompt the user and process the selected
@@ -74,8 +102,13 @@ void runProgram() {
 
 }
 #endif
-
+Poly::Poly(){
+	using namespace std;
+	cout << "calling deefault constructor "<< endl;
+}
 Poly::Poly(char* str) {
+	using namespace std;
+	cout << "calling poly constructor" << endl;
 
 	char *temp_buffer = (char *)malloc(sizeof(char) * (strlen(str)+1));
 	char *poly_buffer = (char *)malloc(sizeof(char) * (strlen(str)+1));
@@ -107,12 +140,10 @@ Poly::Poly(char* str) {
 		}
 	}
 
-	
 	#ifdef DEBUG
 	printf("poly buffer: %s\n", poly_buffer);
 	printf("poly degree: %d\n", poly_degree);
 	#endif
-
 
 	double *coeff_buffer = (double *)malloc(sizeof(double) * (poly_degree + 1));
 	int *pow_buffer = (int *)malloc(sizeof(int) * (poly_degree + 1));
@@ -191,10 +222,11 @@ Poly::Poly(char* str) {
 	free(poly_buffer);
 	free(coeff_buffer);
 	free(pow_buffer);
-
 }
 
 Poly::~Poly() {
+	using namespace std;
+	cout << "calling deestructor "<< endl;
 	//free not only poly_ptr, free the nodes
 	Node *current_node = this->poly_ptr, *temp_node;
 	while (current_node) {

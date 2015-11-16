@@ -14,6 +14,7 @@ private:
 	Node* poly_ptr;
 	int poly_degree;
 public:
+	Poly();
 	Poly(char* str);
 	~Poly();
 	Poly* add(Poly& otherPoly);
