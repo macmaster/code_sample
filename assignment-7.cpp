@@ -125,6 +125,7 @@ Poly::Poly(char* str) {
 		int temp_index = 0;
 		while ((*cp != '\0') && (*cp != 'x')) {
 			temp_buffer[temp_index++] = *cp++;
+			temp_buffer[temp_index] = '\0';//null term
 		}
 		coeff_buffer[count++] = strtod(temp_buffer, NULL);
 		while ((*cp != '\0') && (*cp != '+') && (*cp != '-'))
