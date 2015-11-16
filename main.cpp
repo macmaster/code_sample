@@ -36,8 +36,14 @@ void test1() {
 }
 #endif
 int main() {
-	Poly p1((char*)"000000000003x^67 + 2.787687");
-	p1.print();
+	Poly p1((char*)"-1234567890.9x^2 - 1234567890.9x - 1234567890.9");
+	p1.print();putchar('\n');
+	Poly p2((char*)"-124330");
+	p2.print();putchar('\n');
+	Poly p3((char*)"-666600x");
+	p3.print();putchar('\n');
+	Poly p4((char*)"-666600x - 0000099.4");
+	p4.print();putchar('\n');
 	//test1();
 	//runProgram();
 }
