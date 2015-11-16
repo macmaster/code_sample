@@ -1,7 +1,7 @@
 typedef struct Node {
 	double coeff;
 	int degree;
-	Node* next;
+	Node* next; 
 } Node;
 
 // function where the interactive menu should be implemented
@@ -14,6 +14,7 @@ private:
 	Node* poly_ptr;
 	int poly_degree;
 public:
+	Poly();
 	Poly(char* str);
 	~Poly();
 	Poly* add(Poly& otherPoly);
