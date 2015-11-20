@@ -1,5 +1,6 @@
 #include "poly.h"
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
@@ -33,91 +34,130 @@ Do you want to work with another file (Y/N)? Y
 
 */
 void runProgram() {
-<<<<<<< HEAD
 	using namespace std;
 	char user_input[100];
 	int poly_count, poly_op;
-	
-	//prompt file
-	cout << "Enter the file that you would like to work with: ";
-	cin >> user_input;
+	bool file_flag, quit_flag;
 
-	//read file
-	ifstream poly_file;
-	poly_file.open(user_input);
-	
-	//optioinal: test poly_file.is_open();
-	poly_file >> poly_count;
-	poly_file.ignore(1); // ignore newline char
-	
-	//create poly array
-	Poly **poly_array = new Poly*[poly_count];
-	for(int i = 0; i < poly_count; i++){
-		poly_file.getline(user_input, 100);
-		//cout << "user input: " << user_input << endl;
-		poly_array[i] = new Poly(user_input);
+
+	/******************************************* File Menu ***********************************/
+	quit_flag = false;
+	while (!quit_flag) {
+		//prompt file
+		cout << "Enter the file that you would like to work with: ";
+		cin >> user_input;
+
+		//read file
+		ifstream poly_file;
+		poly_file.open(user_input);
+
+		//optioinal: test poly_file.is_open();
+		poly_file >> poly_count;
+		poly_file.ignore(1); // ignore newline char
+
+							 //create poly array
+		Poly **poly_array = new Poly*[poly_count];
+		for (int i = 0; i < poly_count; i++) {
+			poly_file.getline(user_input, 100);
+			//cout << "user input: " << user_input << endl;
+			poly_array[i] = new Poly(user_input);
+		}
+		cout << "The polynomials available for operation are: " << endl;
+
+		for (int i = 0; i < poly_count; i++) {
+			cout << i + 1 << ". ";
+			poly_array[i]->print();
+			//cout << endl;
+		}
+
+		poly_file.close();
+
+
+		/***************************** Operations Menu *****************************************/
+		file_flag = true; // continue ops on same file
+		while (file_flag) {
+			cout << "What operation would you like to perform?" << endl;
+			cout << "1. ADD polynomials" << endl;
+			cout << "2. MULTIPLY polynomials" << endl;
+			cout << "3. EVALUATE polynomial" << endl;
+
+			cout << endl << "Enter choice #: ";
+			cin >> poly_op;
+
+			int input1, input2;
+			Poly *temp_poly;
+			//Should we check that inputs are valid?
+			switch (poly_op) {
+			case 1://add polys
+				cout << "Enter the two polynomials that you would like to work with: ";
+				cin >> input1; cin.ignore(1); cin >> input2; // ignore the comma
+				if ((input1 > poly_count) || (input2 > poly_count) || (input1 < 1) || (input2 < 1)) //input check
+					cerr << "Invalid polynomial choice!!" << endl;
+				else {
+					cout << "The symbolic sum of the 2 polynomials is: " << endl;
+					temp_poly = (poly_array[--input1]->add(*poly_array[--input2]));
+					temp_poly->print(); cout << endl;
+					free(temp_poly);
+					//cout << "poly1: "; poly_array[--input1]->print(); cout << endl;
+					//cout << "poly2: "; poly_array[--input2]->print(); cout << endl;
+				}
+				break;
+			case 2://mult polys
+				cout << "Enter the two polynomials that you would like to work with: ";
+				cin >> input1; cin.ignore(1); cin >> input2; // ignore the comma
+				if ((input1 > poly_count) || (input2 > poly_count) || (input1 < 1) || (input2 < 1))
+					cerr << "Invalid polynomial choice!!" << endl;
+				else {
+					cout << "The symbolic product of the 2 polynomials is: " << endl;
+					temp_poly = (poly_array[--input1]->multiply(*poly_array[--input2]));
+					temp_poly->print(); cout << endl;
+					free(temp_poly);
+					//cout << "poly1: "; poly_array[--input1]->print(); cout << endl;
+					//cout << "poly2: "; poly_array[--input2]->print(); cout << endl;
+				}
+				break;
+			case 3://eval poly
+				cout << "Enter the polynomial that you would like to work with: "; cin >> input1;
+				cout << "Enter the evaluation point (the value of x): "; cin >> input2;
+				cout << "Value of that polynomial at " << (double)input2 << " is: " << poly_array[--input1]->eval(input2) << endl;
+				break;
+			default:
+				cerr << "Invalid Polynomial Operation!" << endl;
+			}
+
+			//continue? check   (Ronny's Favorite Part of the program)
+			char in_char;
+			do {
+				cout << "Do you want to perform additional operations on the existing file (Y/N)? "; cin >> in_char; cin.ignore(100, '\n');
+				switch (in_char) {
+				case 'n': case 'N':
+					do {
+						cout << "Do you want to work with another file (Y/N)? "; cin >> in_char; cin.ignore(100, '\n');
+						switch (in_char) {
+						case 'n': case 'N':
+							quit_flag = true;
+						case 'y': case 'Y':
+							file_flag = false;
+							break;
+						default:
+							cerr << "Please choose a Y or N!" << endl;
+						}
+					} while ((in_char != 'n') && (in_char != 'N') && (in_char != 'y') && (in_char != 'Y'));
+				case 'y': case 'Y':
+					break;
+				default:
+					cerr << "Please choose a Y or N!" << endl;
+				}
+			} while ((in_char != 'n') && (in_char != 'N') && (in_char != 'y') && (in_char != 'Y'));
+		}
+		// loop and delete memory pointed to by poly pointers before deleting array
+		for (int i = 0; i < poly_count; i++) {
+			delete poly_array[i];
+		}
+		delete[] poly_array;
 	}
-	cout << "The polynomials available for operation are: " << endl;
-	
-	for(int i = 0; i < poly_count; i++){
-		cout << i + 1 << ". ";
-		poly_array[i]->print();
-		cout << endl;
-	}
-	
-	poly_file.close();
-	
-	//operations menu
-	cout << "What operation would you like to perform?" << endl;
-	cout << "1. ADD polynomials"			 << endl;
-	cout << "2. MULTIPLY polynomials"	 << endl;
-	cout << "3. EVALUATE polynomial"	 << endl;
-	
-	cout << endl << "Enter choice #: " << endl;
-	cin >> poly_op;
-	
-	int input1, input2;
-	
-	switch(poly_op){
-		case 1://add polys
-			cout << "Enter the two polynomials that you would like to work with: " << endl;
-			break;
-		case 2://mult polys
-			cout << "Enter the two polynomials that you would like to work with: " << endl;
-			break;
-		case 3://eval poly
-			cout << "Enter the polynomial that you would like to work with: " << endl;
-			break;
-		default:
-			cerr << "Invalid Polynomial Operation!" << endl;
-	}
-	
-	// loop and delete memory pointed to by poly pointers before deleting array
-	for(int i = 0; i < poly_count; i++){
-		delete poly_array[i];
-	}
-	delete[] poly_array;
+	cout << "Thank you for using this program!" << endl;
 }
-#endif
-
-Poly::Poly(){
-	using namespace std;
-	cout << "calling deefault constructor "<< endl;
-}
-Poly::Poly(char* str) {
-	using namespace std;
-	//cout << "calling poly constructor" << endl;
-=======
-
-
-
-
-	// repeatedly prompt the user and process the selected
-
-	// operation until the user selects the quit option. 
-
-}
->>>>>>> origin/master
 
 Poly::Poly(char* str) {
 	int len = strlen(str) + 1;
@@ -218,11 +258,6 @@ Poly::Poly(char* str) {
 }
 
 Poly::~Poly() {
-<<<<<<< HEAD
-	using namespace std;
-	//cout << "calling deestructor "<< endl;
-=======
->>>>>>> origin/master
 	//free not only poly_ptr, free the nodes
 	Node *current_node = this->poly_ptr, *temp_node;
 	while (current_node) {
@@ -318,7 +353,7 @@ Poly* Poly::multiply(Poly& otherPoly) {
 	new_poly->clean();
 	return new_poly;
 }
-double Poly::eval(int x) {
+double Poly::eval(double x) {
 
 	Node *poly = this->poly_ptr;
 	double sum = 0;
@@ -360,6 +395,7 @@ void Poly::print() {
 		}
 		current_node = current_node->next;
 	}
+	printf("\n");
 }
 
 bool Poly::equals(Poly& otherPoly) {
