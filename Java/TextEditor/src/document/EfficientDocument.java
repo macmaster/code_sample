@@ -18,6 +18,7 @@ public class EfficientDocument extends Document {
 	public EfficientDocument(String text)
 	{
 		super(text);
+		numWords = numSentences = numSyllables = 0;
 		processText();
 	}
 	
@@ -27,8 +28,7 @@ public class EfficientDocument extends Document {
 	 * @return true if tok is a word, false otherwise. */
 	private boolean isWord(String tok)
 	{
-	    // Note: This is a fast way of checking whether a string is a word
-	    // You probably don't want to change it.
+	    // This is a fast way of checking whether a string is a word
 		return !(tok.indexOf("!") >=0 || tok.indexOf(".") >=0 || tok.indexOf("?")>=0);
 	}
 	
@@ -39,12 +39,18 @@ public class EfficientDocument extends Document {
      */
 	private void processText()
 	{
-		// Provide this first line in the starter code.  
 		// Words are only strings of letters.  No numbers.
 		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
-		
-		// TODO: Finish this method.  Remember the countSyllables method from 
-		// Document.  That will come in handy here.
+		for(String word: tokens){
+			numSyllables += countSyllables(word);
+			if(isWord(word))
+				numWords++;
+			else
+				numSentences++;
+		}
+		// handle case without punctuation at end.
+		if(!tokens.isEmpty() && isWord(tokens.get(tokens.size() - 1)))
+			numSentences++;
 	}
 	
 	
@@ -57,8 +63,7 @@ public class EfficientDocument extends Document {
 	 */
 	@Override
 	public int getNumWords() {
-		//TODO: write this method.  Hint: It's simple
-	    return 0;
+	    return numWords;
 	}
 
 	/**
@@ -71,8 +76,7 @@ public class EfficientDocument extends Document {
 	 */
 	@Override
 	public int getNumSentences() {
-        //TODO: write this method.  Hint: It's simple
-        return 0;
+        return numSentences;
 	}
 
 	/**
@@ -85,8 +89,7 @@ public class EfficientDocument extends Document {
 	 */
 	@Override
 	public int getNumSyllables() {
-        //TODO: write this method.  Hint: It's simple
-        return 0;
+        return numSyllables;
 	}
 	
 	// Can be used for testing

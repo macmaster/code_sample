@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 /** A class for timing the EfficientDocument and BasicDocument classes
  * 
  * @author UC San Diego Intermediate Programming MOOC team
- *
+ * @author Ronny MacMaster
  */
 
 public class DocumentBenchmarking {
@@ -16,49 +16,50 @@ public class DocumentBenchmarking {
 	public static void main(String [] args) {
 
 	    // Run each test more than once to get bigger numbers and less noise.
-	    // You can try playing around with this number.
-	    int trials = 100;
+	    int trials = 10;
 
 	    // The text to test on
 	    String textfile = "data/warAndPeace.txt";
 		
 	    // The amount of characters to increment each step
-	    // You can play around with this
-		int increment = 20000;
+		int increment = 40000;
 
 		// The number of steps to run.  
-		// You can play around with this.
-		int numSteps = 20;
+		int numSteps = 40;
 		
 		// THe number of characters to start with. 
-		// You can play around with this.
 		int start = 50000;
 		
-		// TODO: Fill in the rest of this method so that it runs two loops
-		// and prints out timing results as described in the assignment 
-		// instructions.
+		System.out.print("# Chars"+"\t"+"   Basic BM"+"\t"+"Efficient BM"+"\n");
 		for (int numToCheck = start; numToCheck < numSteps*increment + start; 
 				numToCheck += increment)
-		{
-			// numToCheck holds the number of characters that you should read from the 
-			// file to create both a BasicDocument and an EfficientDocument.  
+		{			
+			String filetext = getStringFromFile(textfile, numToCheck);
+
+			/* Read numToCheck characters from the file into a String */
+			 System.out.print(numToCheck + "\t");
 			
-			/* Each time through this loop you should:
-			 * 1. Print out numToCheck followed by a tab (\t) (NOT a newline)
-			 * 2. Read numToCheck characters from the file into a String
-			 *     Hint: use the helper method below.
-			 * 3. Time a loop that runs trials times (trials is the variable above) that:
-			 *     a. Creates a BasicDocument 
-			 *     b. Calls fleshScore on this document
-			 * 4. Print out the time it took to complete the loop in step 3 
-			 *      (on the same line as the first print statement) followed by a tab (\t)
-			 * 5. Time a loop that runs trials times (trials is the variable above) that:
-			 *     a. Creates an EfficientDocument 
-			 *     b. Calls fleshScore on this document
-			 * 6. Print out the time it took to complete the loop in step 5 
-			 *      (on the same line as the first print statement) followed by a newline (\n) 
-			 */  
-			 
+			 double begin, end, time;
+			 begin = System.nanoTime();
+			 for(int i = 0; i < trials; i++){
+				 //Basic Trial
+				 BasicDocument b_doc = new BasicDocument(filetext);
+				 b_doc.getFleschScore();
+			 }
+			 end = System.nanoTime();
+			 time = (end - begin)/(1000000000f);
+			 System.out.print(time + "\t");
+
+			 begin = System.nanoTime();
+			 for(int i = 0; i < trials; i++){
+				 //Efficient Trial
+				 EfficientDocument e_doc = new EfficientDocument(filetext);
+				 e_doc.getFleschScore();
+			 }
+			 end = System.nanoTime();
+			 time = (end - begin)/(1000000000f);
+			 System.out.print(time + "\n");
+			
 		}
 	
 	}

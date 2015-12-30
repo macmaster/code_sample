@@ -5,6 +5,7 @@ import java.util.List;
 /** 
  * A naive implementation of the Document abstract class. 
  * @author UC San Diego Intermediate Programming MOOC team
+ * @author Ronny MacMaster
  */
 public class BasicDocument extends Document 
 {
@@ -28,9 +29,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-		//TODO: Implement this method.  See the Module 1 support videos 
-	    // if you need help.
-	    return 0;
+	    List<String> sentences = getTokens("[a-zA-z]+");
+        return sentences.size();
 	}
 	
 	/**
@@ -44,9 +44,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
-        return 0;
+	    List<String> sentences = getTokens("[^.!?]+");
+        return sentences.size();
 	}
 	
 	/**
@@ -59,17 +58,23 @@ public class BasicDocument extends Document
 	 */
 	@Override
 	public int getNumSyllables()
-	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
-        return 0;
+	{	
+		List <String> words = getTokens("[a-zA-Z]+");
+		int count = 0;
+		for(String word : words){
+			count += countSyllables(word);
+		}
+		return count;
+		
+		//List<String> sentences = getTokens("([AEIOUYaeiouy]+[a-zA-z])|([AIOUYaiouy]+)|([^Ee][Ee][ .!?])");
+        //return sentences.size();
 	}
 	
 	
 	/* The main method for testing this class. 
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
-	{
+	{	
 		testCase(new BasicDocument("This is a test.  How many???  "
 		        + "Senteeeeeeeeeences are here... there should be 5!  Right?"),
 				16, 13, 5);
@@ -86,8 +91,6 @@ public class BasicDocument extends Document
 		testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
-		
-		
 	}
 	
 }
