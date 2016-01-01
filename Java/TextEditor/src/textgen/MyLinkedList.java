@@ -6,7 +6,7 @@ import java.util.AbstractList;
 /** A class that implements a doubly linked list
  * 
  * @author UC San Diego Intermediate Programming MOOC team
- *
+ * @author Ronny MacMaster
  * @param <E> The type of the elements stored in the list
  */
 public class MyLinkedList<E> extends AbstractList<E> {
@@ -15,8 +15,14 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	int size;
 
 	/** Create a new empty LinkedList */
+	/** We will forgo the two sentinel nodes. */
 	public MyLinkedList() {
-		// TODO: Implement this method
+		/* Sentinel Nodes */
+		/*	head = new LLNode<E>(null);
+			tail = new LLNode<E>(null);
+			head.next = tail;
+			tail.prev = head;			*/
+			size = 0;
 	}
 
 	/**
@@ -25,16 +31,52 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public boolean add(E element ) 
 	{
-		// TODO: Implement this method
-		return false;
+		if(element == null){
+			throw new NullPointerException();
+		}
+		try{
+			LLNode<E> node = new LLNode<E>(element);
+			node.prev = tail;
+			if(size == 0){
+				head = node;
+			}
+			else{
+				tail.next = node;
+			}
+			tail = node;
+			size++;	
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
 	}
 
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
 	public E get(int index) 
 	{
-		// TODO: Implement this method.
-		return null;
+		if((index < 0) || (index >= size)){
+			throw new IndexOutOfBoundsException();
+		}
+		//optimize to n/2
+		if(index <= size/2){
+			LLNode<E> node = head;
+			while(index > 0){
+				node = node.next;
+				index--;
+			}
+			return node.data;
+		}
+		else{
+			LLNode<E> node = tail;
+			while(index < (size-1)){
+				node = node.prev;
+				index++;
+			}
+			return node.data;
+		}
+		
 	}
 
 	/**
@@ -44,15 +86,54 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public void add(int index, E element ) 
 	{
-		// TODO: Implement this method
+		if((size == 0 && index == 0)||(index == size)){
+			//empty List condition
+			add(element);
+			return;
+		}
+		if((index < 0) || (index >= size)){
+			throw new IndexOutOfBoundsException();
+		}
+		else if(element == null){
+			throw new NullPointerException();
+		}
+		//optimize to n/2
+		LLNode<E> node = new LLNode<E>(element);
+		if(index <= size/2){
+			LLNode<E> curr = head;
+			while(index > 0){
+				curr = curr.next;
+				index--;
+			}
+			if(head == curr){
+				head = node;
+			}
+			else{
+				curr.prev.next = node;
+			}
+			node.prev = curr.prev;
+			node.next = curr;
+			curr.prev = node;
+		}
+		else{
+			LLNode<E> curr = tail;
+			while(index < (size-1)){
+				curr = curr.prev;
+				index++;
+			}
+			node.prev = curr.prev;
+			node.prev.next = node;
+			node.next = curr;
+			curr.prev = node;
+		}
+		size++;
 	}
 
 
 	/** Return the size of the list */
 	public int size() 
 	{
-		// TODO: Implement this method
-		return -1;
+		return size;
 	}
 
 	/** Remove a node at the specified index and return its data element.
@@ -63,8 +144,38 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E remove(int index) 
 	{
-		// TODO: Implement this method
-		return null;
+		if((index < 0) || (index >= size)){
+			throw new IndexOutOfBoundsException();
+		}
+		//optimize to n/2
+		LLNode<E> node;
+		if(index <= size/2){
+			node = head;
+			while(index > 0){
+				node = node.next;
+				index--;
+			}
+		}
+		else{
+			node = tail;
+			while(index < (size-1)){
+				node = node.prev;
+				index++;
+			}
+		}
+		if(node == head){
+			head = node.next;
+		}
+		else{
+			node.prev.next = node.next;
+		}
+		if(node == tail){
+			tail = node.prev;
+		}
+		else{
+			node.next.prev = node.prev;
+		}
+		size--;	return node.data;
 	}
 
 	/**
@@ -76,8 +187,31 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E set(int index, E element) 
 	{
-		// TODO: Implement this method
-		return null;
+		if((index < 0) || (index >= size)){
+			throw new IndexOutOfBoundsException();
+		}
+		if(element == null){
+			throw new NullPointerException();
+		}
+		//optimize to n/2
+		LLNode<E> node;
+		if(index <= size/2){
+			node = head;
+			while(index > 0){
+				node = node.next;
+				index--;
+			}
+		}
+		else{
+			node = tail;
+			while(index < (size-1)){
+				node = node.prev;
+				index++;
+			}
+		}
+		E value = node.data;
+		node.data = element;
+		return value;
 	}   
 }
 
@@ -86,9 +220,6 @@ class LLNode<E>
 	LLNode<E> prev;
 	LLNode<E> next;
 	E data;
-
-	// TODO: Add any other methods you think are useful here
-	// E.g. you might want to add another constructor
 
 	public LLNode(E e) 
 	{
