@@ -3,7 +3,7 @@ package textgen;
 /**
  *  The interface for the MarkovTextGenerator
  *  @author UC San Diego Intermediate Programming MOOC team
- *  
+ *  @author Ronny MacMaster
  */
 public interface MarkovTextGenerator {
 	
