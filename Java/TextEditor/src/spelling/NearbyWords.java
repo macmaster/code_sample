@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author UC San Diego Intermediate MOOC team
- *
+ * @author Ronny MacMaster
  */
 public class NearbyWords implements SpellingSuggest {
 	// THRESHOLD to determine how many words to look through when looking

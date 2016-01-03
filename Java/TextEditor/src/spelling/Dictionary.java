@@ -5,7 +5,7 @@ package spelling;
 
 /**
  * @author Christine
- *
+ * @author Ronny MacMaster
  */
 public interface Dictionary {
 	/** Add this word to the dictionary.

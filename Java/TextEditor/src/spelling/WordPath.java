@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author UC San Diego Intermediate MOOC team
- *
+ * @author Ronny MacMaster
  */
 
 public interface WordPath {

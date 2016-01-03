@@ -13,7 +13,7 @@ import java.util.List;
  * Search of Nearby words to create a path between two words. 
  * 
  * @author UC San Diego Intermediate MOOC team
- *
+ * @author Ronny MacMaster
  */
 public class WPTree implements WordPath {
 

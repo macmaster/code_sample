@@ -4,7 +4,7 @@ package spelling;
 /** A class for timing the Dictionary Implementations
  * 
  * @author UC San Diego Intermediate Programming MOOC team
- *
+ * @author Ronny MacMaster
  */
 
 public class DictionaryBenchmarking {
