@@ -7,6 +7,7 @@ package spelling;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * WPTree implements WordPath by dynamically creating a tree of words during a Breadth First
@@ -26,10 +27,18 @@ public class WPTree implements WordPath {
 	// You'll need to create your own NearbyWords object here.
 	public WPTree () {
 		this.root = null;
-		// TODO initialize a NearbyWords object
-		// Dictionary d = new DictionaryHashSet();
-		// DictionaryLoader.loadDictionary(d, "data/dict.txt");
-		// this.nw = new NearbyWords(d);
+		// initialize a NearbyWords object
+		 Dictionary d = new DictionaryHashSet();
+		 DictionaryLoader.loadDictionary(d, "data/dict.txt");
+		 this.nw = new NearbyWords(d);
+	}
+	
+	public WPTree(String data_file){
+		this.root = null;
+		// initialize a NearbyWords object
+		 Dictionary d = new DictionaryHashSet();
+		 DictionaryLoader.loadDictionary(d, data_file);
+		 this.nw = new NearbyWords(d);
 	}
 	
 	//This constructor will be used by the grader code
@@ -41,8 +50,27 @@ public class WPTree implements WordPath {
 	// see method description in WordPath interface
 	public List<String> findPath(String word1, String word2) 
 	{
-	    // TODO: Implement this method.
-	    return new LinkedList<String>();
+		Queue<WPTreeNode> queue = new LinkedList<WPTreeNode>();
+		HashSet<WPTreeNode> visited = new HashSet<WPTreeNode>();
+	    root = new WPTreeNode(word1, null); //init root node
+	    queue.add(root); visited.add(root);
+	    int count = 800;
+	    while(!queue.isEmpty()&&(count>0)){
+	    	WPTreeNode node = queue.remove();
+	    	List<String> list = nw.distanceOne(node.getWord(), true);
+	    	for(String str : list){
+	    		WPTreeNode child = node.addChild(str);
+	    		if(!visited.contains(child)){
+	    			queue.add(child);
+	    			visited.add(child);
+	    			if(word2.equals(child.getWord()))
+	    				return child.buildPathToRoot();
+	    		}
+	    	}
+	    	count--;
+	    }
+	    
+	    return null; // no valid path
 	}
 	
 	// Method to print a list of WPTreeNodes (useful for debugging)
