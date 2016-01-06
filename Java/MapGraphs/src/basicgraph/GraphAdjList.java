@@ -2,8 +2,10 @@ package basicgraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /** A class that implements a directed graph. 
@@ -96,8 +98,17 @@ public class GraphAdjList extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */		
 	 public List<Integer> getDistance2(int v) {
-		 
-		 return null;
+		 //breadth_first search to level 2
+		 Queue<Integer> vertex_queue = new LinkedList<Integer>();
+		 List<Integer> vertex_list = new ArrayList<Integer>();
+		 //level 1
+		 vertex_queue.addAll(getNeighbors(v));
+		 //level 2
+		 while(!vertex_queue.isEmpty()){
+			 v = vertex_queue.remove();
+			 vertex_list.addAll(getNeighbors(v));
+		 }
+		 return vertex_list;
 	}
 	
 	/**

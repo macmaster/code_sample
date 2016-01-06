@@ -137,7 +137,6 @@ public abstract class Graph {
 	 * @param v The starting vertex
 	 * @return A list of the vertices that can be reached in exactly two hops (by 
 	 * following two edges) from vertex v.
-	 * XXX: Implement in part 2 of week 1 for each subclass of Graph
 	 */
 	public abstract List<Integer> getDistance2(int v); 
 
@@ -235,7 +234,7 @@ public abstract class Graph {
 
 	
 	public static void main (String[] args) {
-		//GraphLoader.createIntersectionsFile("data/maps/austin.map", "data/intersections/myucsd.intersections");
+		//GraphLoader.createIntersectionsFile("data/testdata/simpletest.map", "data/intersections/myuscd.intersections");
 		
 
 		// For testing of Part 1 functionality
@@ -247,8 +246,11 @@ public abstract class Graph {
 		System.out.println("****");
 		System.out.println("Roads / intersections:");
 		GraphAdjList graphFromFile = new GraphAdjList();
-		GraphLoader.loadRoadMap("data/maps/austin.map", graphFromFile);
+		GraphLoader.loadRoadMap("data/testdata/simpletest.map", graphFromFile);
+		GraphAdjMatrix graphFromFileMat = new GraphAdjMatrix();
+		GraphLoader.loadRoadMap("data/testdata/simpletest.map", graphFromFileMat);
 		System.out.println(graphFromFile);
+		System.out.println(graphFromFileMat);
 		
 		System.out.println("Observe all degrees are <= 12.");
 		System.out.println("****");
@@ -268,7 +270,16 @@ public abstract class Graph {
 		// Test your distance2 code here.
 		System.out.println("Testing distance-two methods on sample graphs...");
 		System.out.println("Goal: implement method using two approaches.");
-
+		
+		/*System.out.println("****");
+		System.out.println("distance2:");
+		for(int i = 0; i < graphFromFile.getNumVertices(); i++)
+			System.out.println("Vertex" + i + ": " + graphFromFile.getDistance2(i));*/
+		
+		System.out.println("****");
+		System.out.println("distance2Graph:");
+		for(int i = 0; i < graphFromFileMat.getNumVertices(); i++)
+			System.out.println("Vertex" + i + ": " + graphFromFile.getDistance2(i) +"\t\t\t" + "Vertex" + i + ": " + graphFromFileMat.getDistance2(i));
 
 		
 	}
