@@ -1,19 +1,20 @@
 /**
- * @author UCSD MOOC development team and YOU
+ * @author Ronny MacMaster
  * 
  * A class which reprsents a graph of geographic locations
- * Nodes in the graph are intersections between 
+ * Nodes in the graph are intersections between roads or dead ends
  *
  */
 package roadgraph;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
-
 import geography.GeographicPoint;
 import util.GraphLoader;
+
 
 /**
  * @author UCSD MOOC development team and YOU
@@ -23,15 +24,17 @@ import util.GraphLoader;
  *
  */
 public class MapGraph {
-	//TODO: Add your member variables here in WEEK 2
-	
+	private int numVertices, numEdges;
+	private Set<GeographicPoint> vertices;
+	private HashMap<GeographicPoint, MapNode> roadMap;	//actual map
 	
 	/** 
 	 * Create a new empty MapGraph 
 	 */
 	public MapGraph()
 	{
-		// TODO: Implement in this constructor in WEEK 2
+		roadMap = new HashMap<GeographicPoint, MapNode>();
+		numVertices = 0; numEdges = 0;
 	}
 	
 	/**
@@ -40,8 +43,7 @@ public class MapGraph {
 	 */
 	public int getNumVertices()
 	{
-		//TODO: Implement this method in WEEK 2
-		return 0;
+		return numVertices;
 	}
 	
 	/**
@@ -50,8 +52,7 @@ public class MapGraph {
 	 */
 	public Set<GeographicPoint> getVertices()
 	{
-		//TODO: Implement this method in WEEK 2
-		return null;
+		return vertices;
 	}
 	
 	/**
@@ -60,8 +61,7 @@ public class MapGraph {
 	 */
 	public int getNumEdges()
 	{
-		//TODO: Implement this method in WEEK 2
-		return 0;
+		return numEdges; 
 	}
 
 	
@@ -75,8 +75,12 @@ public class MapGraph {
 	 */
 	public boolean addVertex(GeographicPoint location)
 	{
-		// TODO: Implement this method in WEEK 2
-		return false;
+		if((location == null)||vertices.contains(location))
+			return false;
+		vertices.add(location);
+		
+		numVertices++;
+		return true;
 	}
 	
 	/**
