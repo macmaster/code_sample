@@ -129,6 +129,8 @@ public abstract class Graph {
 			neighbor_list.addAll(getInNeighbors(i));
 			degree_sequence.add(neighbor_list.size());
 		}
+		Collections.sort(degree_sequence);
+		Collections.reverse(degree_sequence);
 		return degree_sequence;
 	}
 	
