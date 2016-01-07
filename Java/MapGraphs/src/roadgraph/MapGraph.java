@@ -9,31 +9,31 @@ package roadgraph;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.function.Consumer;
 import geography.GeographicPoint;
+import geography.RoadSegment;
 import util.GraphLoader;
 
-
-/**
- * @author UCSD MOOC development team and YOU
- * 
- * A class which represents a graph of geographic locations
- * Nodes in the graph are intersections between 
- *
- */
 public class MapGraph {
 	private int numVertices, numEdges;
 	private Set<GeographicPoint> vertices;
-	private HashMap<GeographicPoint, MapNode> roadMap;	//actual map
+	private Set<RoadSegment> roads;//(start, road)
+	private HashMap<GeographicPoint, Vertex> intersections;	//(coor, intersection)
 	
 	/** 
 	 * Create a new empty MapGraph 
 	 */
 	public MapGraph()
 	{
-		roadMap = new HashMap<GeographicPoint, MapNode>();
+		vertices = new HashSet<GeographicPoint>();
+		intersections = new HashMap<GeographicPoint, Vertex>();
+		roads = new HashSet<RoadSegment>();
 		numVertices = 0; numEdges = 0;
 	}
 	
@@ -47,15 +47,6 @@ public class MapGraph {
 	}
 	
 	/**
-	 * Return the intersections, which are the vertices in this graph.
-	 * @return The vertices in this graph as GeographicPoints
-	 */
-	public Set<GeographicPoint> getVertices()
-	{
-		return vertices;
-	}
-	
-	/**
 	 * Get the number of road segments in the graph
 	 * @return The number of edges in the graph.
 	 */
@@ -63,8 +54,15 @@ public class MapGraph {
 	{
 		return numEdges; 
 	}
-
 	
+	/**
+	 * Return the intersections, which are the vertices in this graph.
+	 * @return The vertices in this graph as GeographicPoints
+	 */
+	public Set<GeographicPoint> getVertices()
+	{
+		return vertices;
+	}
 	
 	/** Add a node corresponding to an intersection at a Geographic Point
 	 * If the location is already in the graph or null, this method does 
@@ -78,7 +76,7 @@ public class MapGraph {
 		if((location == null)||vertices.contains(location))
 			return false;
 		vertices.add(location);
-		
+		intersections.put(location, new Vertex(location));
 		numVertices++;
 		return true;
 	}
@@ -97,9 +95,15 @@ public class MapGraph {
 	 */
 	public void addEdge(GeographicPoint from, GeographicPoint to, String roadName,
 			String roadType, double length) throws IllegalArgumentException {
-
-		//TODO: Implement this method in WEEK 2
-		
+		if(!vertices.contains(from)||!vertices.contains(to)||
+				(from == null)||(from == null)||(length < 0)){
+			throw new IllegalArgumentException();
+		}
+		Vertex ver = intersections.get(from);
+		ver.addNeighbor(intersections.get(to));
+		RoadSegment edge = new RoadSegment(from, to, new ArrayList<GeographicPoint>(), roadName, roadType, length);
+		roads.add(edge);
+		numEdges++;
 	}
 	
 
@@ -127,11 +131,36 @@ public class MapGraph {
 	public List<GeographicPoint> bfs(GeographicPoint start, 
 			 					     GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
-		// TODO: Implement this method in WEEK 2
-		
-		// Hook for visualization.  See writeup.
-		//nodeSearched.accept(next.getLocation());
-
+		Queue<GeographicPoint> point_queue = new LinkedList<GeographicPoint>();
+		Set<GeographicPoint> point_set = new HashSet<GeographicPoint>();
+		HashMap<GeographicPoint, RoadSegment> road_log = new HashMap<GeographicPoint, RoadSegment>(); // log all previously tried roads (end, road)
+		// fill start
+		point_queue.add(start);
+		road_log.put(start, new RoadSegment(start, start, new ArrayList<GeographicPoint>(), null, null, 0));
+		//search
+		while(!point_queue.isEmpty()){
+			GeographicPoint point = point_queue.remove();
+			nodeSearched.accept(point);
+			//exit condition
+			if(point.equals(goal)){
+				RoadSegment road = road_log.get(goal);
+				List<GeographicPoint> path = road.getPoints(start, goal);
+				path.remove(0);
+				return path;
+			}
+			Vertex v = intersections.get(point); 
+			for(Vertex ver : v.getNeighbors()){
+				GeographicPoint neighbor_point = ver.getLocation();
+				if(!point_set.contains(neighbor_point)){ // avoid duplicate checks
+					RoadSegment old_road = road_log.get(point);
+					List<GeographicPoint> old_path = old_road.getPoints(start, point);	old_path.remove(0); // chop off front end
+					RoadSegment new_road = new RoadSegment(start, neighbor_point, old_path, null, null, 0);
+					road_log.put(neighbor_point, new_road);
+					point_queue.add(neighbor_point);
+					point_set.add(neighbor_point);
+				}
+			}
+		}
 		return null;
 	}
 	
