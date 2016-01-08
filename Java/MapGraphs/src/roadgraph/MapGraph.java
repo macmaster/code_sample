@@ -190,7 +190,7 @@ public class MapGraph {
 	public List<GeographicPoint> dijkstra(GeographicPoint start, 
 										  GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
-		// TODO: Implement this method in WEEK 3
+
 
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());

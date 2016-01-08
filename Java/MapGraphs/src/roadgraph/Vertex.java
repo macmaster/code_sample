@@ -13,16 +13,14 @@ import geography.GeographicPoint;
 public class Vertex {
 	private List<Vertex> neighbors;
 	private GeographicPoint location;
-	
-	public Vertex(){
-		System.out.println("invalid node created!!!!!!!!!!");
-		location = null;
-		neighbors = null;
-	}
+	private double start_distance;
+	private double end_distance;
 	
 	public Vertex(GeographicPoint location){
 		this.location = location;
 		this.neighbors = new ArrayList<Vertex>();
+		start_distance = 0;
+		end_distance = 0;
 	}
 	
 	public List<Vertex> getNeighbors(){
@@ -40,5 +38,17 @@ public class Vertex {
 
 	public GeographicPoint getLocation(){
 		return location;
+	}
+	public void setEndDistance(double dist){
+		end_distance = dist;
+	}
+	public void setStartDistance(double dist){
+		start_distance = dist;
+	}
+	public double getStartDistance(){
+		return start_distance;
+	}
+	public double getEndDistance(){
+		return end_distance;
 	}
 }
