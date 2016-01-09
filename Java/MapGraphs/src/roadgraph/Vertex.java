@@ -7,12 +7,14 @@
 package roadgraph;
 
 import java.util.Set;
+import java.util.HashMap;
 import java.util.HashSet;
 import geography.GeographicPoint;
 
 @SuppressWarnings("rawtypes")
 public class Vertex implements Comparable{
 	private Set<Edge> neighbors; // list of all roads out of node
+	private HashMap<GeographicPoint, Edge> roads; // map of roads out of node (endpnt, road)
 	private GeographicPoint location;
 	private double start_distance;
 	private double end_distance;
@@ -20,6 +22,7 @@ public class Vertex implements Comparable{
 	public Vertex(GeographicPoint location){
 		this.location = location;
 		this.neighbors = new HashSet<Edge>();
+		this.roads = new HashMap<GeographicPoint, Edge>(); 
 		start_distance = 0;
 		end_distance = 0;
 	}
@@ -30,6 +33,7 @@ public class Vertex implements Comparable{
 			return false;
 		else{
 			neighbors.add(new_neighbor);
+			roads.put(new_neighbor.getEndPoint(), new_neighbor);
 			return true;
 		}
 	}
@@ -39,6 +43,16 @@ public class Vertex implements Comparable{
 		for(Edge e: this.neighbors)
 			neighbors.add(e.getEnd());
 		return neighbors;
+	}
+	
+	public Edge getNeighborRoad(Vertex neighbor){
+		Edge road = roads.get(neighbor.getLocation());
+		if(road == null){
+			throw new IllegalArgumentException();
+		}
+		else{
+			return road;
+		}
 	}
 	
 	public GeographicPoint getLocation(){
@@ -57,9 +71,15 @@ public class Vertex implements Comparable{
 		return end_distance;
 	}
 	
+	public double infinity(){
+		return Double.MAX_VALUE;
+	}
+	
 	public int compareTo(Object o){
 		Vertex v = (Vertex)o;
-		return ((Double)this.getStartDistance()).compareTo((Double)v.getStartDistance());
+		Double dist = this.getStartDistance() + this.getEndDistance();
+		Double other_dist = v.getStartDistance() + v.getEndDistance();
+		return dist.compareTo(other_dist);
 	}
 	public boolean equals(Object o){
 		Vertex v = (Vertex)o;

@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.ArrayList;
 import java.util.Set;
@@ -24,7 +25,7 @@ import util.GraphLoader;
 public class MapGraph {
 	private int numVertices, numEdges;
 	private Set<GeographicPoint> vertices;
-	private Set<Edge> roads;//(start, road)
+	private Set<Edge> roads;
 	private HashMap<GeographicPoint, Vertex> intersections;	//(coor, intersection)
 	
 	/** 
@@ -163,13 +164,13 @@ public class MapGraph {
 	 *   start to goal (including both start and goal).
 	 */
 	private List<GeographicPoint> reconstructPath(Map<Vertex, Vertex> parents, Vertex start, Vertex goal){
-		List<GeographicPoint> path = new LinkedList<GeographicPoint>();
+		LinkedList<GeographicPoint> path = new LinkedList<GeographicPoint>();
 		Vertex curr = goal;
 		while(!curr.equals(start)){
-			path.add(curr.getLocation());
+			path.addFirst(curr.getLocation());
 			curr = parents.get(curr);
 		}
-		path.add(start.getLocation());
+		path.addFirst(start.getLocation()); 
 		return path;
 	}
 	
@@ -200,10 +201,37 @@ public class MapGraph {
 	public List<GeographicPoint> dijkstra(GeographicPoint start, 
 										  GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
-
-
-		// Hook for visualization.  See writeup.
-		//nodeSearched.accept(next.getLocation());
+		Queue<Vertex> point_queue = new PriorityQueue<Vertex>();
+		Set<Vertex> visited_set = new HashSet<Vertex>();
+		Map<Vertex, Vertex> parent_map = new HashMap<Vertex, Vertex>();
+		
+		for(GeographicPoint p : vertices){
+			Vertex v = intersections.get(p);
+			v.setStartDistance(v.infinity());
+			v.setEndDistance(0);
+		}
+		
+		Vertex curr = intersections.get(start);
+		curr.setStartDistance(0);
+		point_queue.add(curr);
+		while(!point_queue.isEmpty()){
+			curr = point_queue.remove();
+			if(!visited_set.contains(curr)){
+				visited_set.add(curr);
+				nodeSearched.accept(curr.getLocation());
+				if(curr.getLocation().equals(goal))
+					return reconstructPath(parent_map, intersections.get(start), intersections.get(goal));
+				for(Vertex v : curr.getNeighbors()){
+					Edge e = curr.getNeighborRoad(v);
+					double dist = curr.getStartDistance()+e.getLength();
+					if((dist < v.getStartDistance())&&(!visited_set.contains(v))){
+						v.setStartDistance(dist);//update distance
+						parent_map.put(v, curr);
+						point_queue.add(v);//queue with priority
+					}
+				}
+			}
+		}
 		
 		return null;
 	}
@@ -232,10 +260,39 @@ public class MapGraph {
 	public List<GeographicPoint> aStarSearch(GeographicPoint start, 
 											 GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
-		// TODO: Implement this method in WEEK 3
+		Queue<Vertex> point_queue = new PriorityQueue<Vertex>();
+		Set<Vertex> visited_set = new HashSet<Vertex>();
+		Map<Vertex, Vertex> parent_map = new HashMap<Vertex, Vertex>();
 		
-		// Hook for visualization.  See writeup.
-		//nodeSearched.accept(next.getLocation());
+		for(GeographicPoint p : vertices){
+			Vertex v = intersections.get(p);
+			v.setStartDistance(v.infinity());
+			v.setEndDistance(v.infinity());
+		}
+		
+		Vertex curr = intersections.get(start);
+		curr.setStartDistance(0);
+		curr.setEndDistance(start.distance(goal));
+		point_queue.add(curr);
+		while(!point_queue.isEmpty()){
+			curr = point_queue.remove();
+			if(!visited_set.contains(curr)){
+				visited_set.add(curr);
+				nodeSearched.accept(curr.getLocation());
+				if(curr.getLocation().equals(goal))
+					return reconstructPath(parent_map, intersections.get(start), intersections.get(goal));
+				for(Vertex v : curr.getNeighbors()){
+					Edge e = curr.getNeighborRoad(v);
+					double dist = curr.getStartDistance()+e.getLength()+v.getLocation().distance(goal);
+					if((dist < v.getStartDistance()+v.getEndDistance())&&(!visited_set.contains(v))){
+						v.setStartDistance(curr.getStartDistance()+e.getLength());//update distance
+						v.setEndDistance(v.getLocation().distance(goal));
+						parent_map.put(v, curr);
+						point_queue.add(v);//queue with priority
+					}
+				}
+			}
+		}
 		
 		return null;
 	}
