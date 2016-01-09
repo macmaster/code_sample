@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.ArrayList;
 import java.util.Set;
@@ -23,7 +24,7 @@ import util.GraphLoader;
 public class MapGraph {
 	private int numVertices, numEdges;
 	private Set<GeographicPoint> vertices;
-	private Set<RoadSegment> roads;//(start, road)
+	private Set<Edge> roads;//(start, road)
 	private HashMap<GeographicPoint, Vertex> intersections;	//(coor, intersection)
 	
 	/** 
@@ -33,7 +34,7 @@ public class MapGraph {
 	{
 		vertices = new HashSet<GeographicPoint>();
 		intersections = new HashMap<GeographicPoint, Vertex>();
-		roads = new HashSet<RoadSegment>();
+		roads = new HashSet<Edge>();
 		numVertices = 0; numEdges = 0;
 	}
 	
@@ -100,8 +101,8 @@ public class MapGraph {
 			throw new IllegalArgumentException();
 		}
 		Vertex ver = intersections.get(from);
-		ver.addNeighbor(intersections.get(to));
-		RoadSegment edge = new RoadSegment(from, to, new ArrayList<GeographicPoint>(), roadName, roadType, length);
+		Edge edge = new Edge(roadName, roadType, intersections.get(from), intersections.get(to), length);
+		ver.addNeighbor(edge);//add road out of start
 		roads.add(edge);
 		numEdges++;
 	}
@@ -131,38 +132,47 @@ public class MapGraph {
 	public List<GeographicPoint> bfs(GeographicPoint start, 
 			 					     GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
-		Queue<GeographicPoint> point_queue = new LinkedList<GeographicPoint>();
-		Set<GeographicPoint> point_set = new HashSet<GeographicPoint>();
-		HashMap<GeographicPoint, RoadSegment> road_log = new HashMap<GeographicPoint, RoadSegment>(); // log all previously tried roads (end, road)
-		// fill start
-		point_queue.add(start);
-		road_log.put(start, new RoadSegment(start, start, new ArrayList<GeographicPoint>(), null, null, 0));
-		//search
+		Queue<Vertex> point_queue = new LinkedList<Vertex>();
+		Set<Vertex> visited_set = new HashSet<Vertex>();
+		Map<Vertex, Vertex> parent_map = new HashMap<Vertex, Vertex>();
+		
+		Vertex curr = intersections.get(start);
+		point_queue.add(curr);
 		while(!point_queue.isEmpty()){
-			GeographicPoint point = point_queue.remove();
-			nodeSearched.accept(point);
-			//exit condition
-			if(point.equals(goal)){
-				RoadSegment road = road_log.get(goal);
-				List<GeographicPoint> path = road.getPoints(start, goal);
-				path.remove(0);
-				return path;
-			}
-			Vertex v = intersections.get(point); 
-			for(Vertex ver : v.getNeighbors()){
-				GeographicPoint neighbor_point = ver.getLocation();
-				if(!point_set.contains(neighbor_point)){ // avoid duplicate checks
-					RoadSegment old_road = road_log.get(point);
-					List<GeographicPoint> old_path = old_road.getPoints(start, point);	old_path.remove(0); // chop off front end
-					RoadSegment new_road = new RoadSegment(start, neighbor_point, old_path, null, null, 0);
-					road_log.put(neighbor_point, new_road);
-					point_queue.add(neighbor_point);
-					point_set.add(neighbor_point);
+			curr = point_queue.remove();
+			nodeSearched.accept(curr.getLocation());
+			if(curr.getLocation().equals(goal))
+				return reconstructPath(parent_map, intersections.get(start), intersections.get(goal)); // terminal state;
+			for(Vertex v : curr.getNeighbors()){
+				if(!visited_set.contains(v)){
+					visited_set.add(v);
+					parent_map.put(v, curr);
+					point_queue.add(v);
 				}
 			}
 		}
 		return null;
 	}
+	
+	/** Reconstruct the path from start to goal using the Parent Map
+	 * 
+	 * @param parents The parent map
+	 * @param start The starting location
+	 * @param goal The goal location
+	 * @return The list of intersections that form the path from 
+	 *   start to goal (including both start and goal).
+	 */
+	private List<GeographicPoint> reconstructPath(Map<Vertex, Vertex> parents, Vertex start, Vertex goal){
+		List<GeographicPoint> path = new LinkedList<GeographicPoint>();
+		Vertex curr = goal;
+		while(!curr.equals(start)){
+			path.add(curr.getLocation());
+			curr = parents.get(curr);
+		}
+		path.add(start.getLocation());
+		return path;
+	}
+	
 	
 
 	/** Find the path from start to goal using Dijkstra's algorithm
