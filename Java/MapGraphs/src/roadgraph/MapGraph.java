@@ -105,6 +105,7 @@ public class MapGraph {
 		Edge edge = new Edge(roadName, roadType, intersections.get(from), intersections.get(to), length);
 		ver.addNeighbor(edge);//add road out of start
 		roads.add(edge);
+		System.out.format("%30s%30s\n", roadName, roadType);
 		numEdges++;
 	}
 	
@@ -204,6 +205,7 @@ public class MapGraph {
 		Queue<Vertex> point_queue = new PriorityQueue<Vertex>();
 		Set<Vertex> visited_set = new HashSet<Vertex>();
 		Map<Vertex, Vertex> parent_map = new HashMap<Vertex, Vertex>();
+		int count = 0;
 		
 		for(GeographicPoint p : vertices){
 			Vertex v = intersections.get(p);
@@ -215,14 +217,17 @@ public class MapGraph {
 		curr.setStartDistance(0);
 		point_queue.add(curr);
 		while(!point_queue.isEmpty()){
-			curr = point_queue.remove();
+			curr = point_queue.remove(); count++;
 			if(!visited_set.contains(curr)){
 				visited_set.add(curr);
 				nodeSearched.accept(curr.getLocation());
-				if(curr.getLocation().equals(goal))
+				if(curr.getLocation().equals(goal)){
+					System.out.println("Dijkstra: " + count);
 					return reconstructPath(parent_map, intersections.get(start), intersections.get(goal));
+				}
 				for(Vertex v : curr.getNeighbors()){
 					Edge e = curr.getNeighborRoad(v);
+					 // account for start, end, and multiplier distances
 					double dist = curr.getStartDistance()+e.getLength();
 					if((dist < v.getStartDistance())&&(!visited_set.contains(v))){
 						v.setStartDistance(dist);//update distance
@@ -232,7 +237,7 @@ public class MapGraph {
 				}
 			}
 		}
-		
+		System.out.println("Dijkstra: " + count);
 		return null;
 	}
 
@@ -263,6 +268,7 @@ public class MapGraph {
 		Queue<Vertex> point_queue = new PriorityQueue<Vertex>();
 		Set<Vertex> visited_set = new HashSet<Vertex>();
 		Map<Vertex, Vertex> parent_map = new HashMap<Vertex, Vertex>();
+		int count = 0;
 		
 		for(GeographicPoint p : vertices){
 			Vertex v = intersections.get(p);
@@ -275,41 +281,44 @@ public class MapGraph {
 		curr.setEndDistance(start.distance(goal));
 		point_queue.add(curr);
 		while(!point_queue.isEmpty()){
-			curr = point_queue.remove();
+			curr = point_queue.remove(); count++;
 			if(!visited_set.contains(curr)){
 				visited_set.add(curr);
 				nodeSearched.accept(curr.getLocation());
-				if(curr.getLocation().equals(goal))
+				if(curr.getLocation().equals(goal)){
+					System.out.println("aStar: " + count);
 					return reconstructPath(parent_map, intersections.get(start), intersections.get(goal));
+				}
 				for(Vertex v : curr.getNeighbors()){
 					Edge e = curr.getNeighborRoad(v);
-					double dist = curr.getStartDistance()+e.getLength()+v.getLocation().distance(goal);
+					// account for start, end, and multiplier distances
+					double dist = (curr.getStartDistance()+e.getLength()+v.getLocation().distance(goal))*e.RoadMultiplier();
 					if((dist < v.getStartDistance()+v.getEndDistance())&&(!visited_set.contains(v))){
-						v.setStartDistance(curr.getStartDistance()+e.getLength());//update distance
-						v.setEndDistance(v.getLocation().distance(goal));
+						v.setStartDistance(e.RoadMultiplier()*(curr.getStartDistance()+e.getLength()));//update distance
+						v.setEndDistance(e.RoadMultiplier()*v.getLocation().distance(goal));
 						parent_map.put(v, curr);
 						point_queue.add(v);//queue with priority
 					}
 				}
 			}
 		}
-		
+		System.out.println("aStar: " + count);
 		return null;
 	}
 
 	
 	
 	public static void main(String[] args)
-	{
+	{	/*
 		System.out.print("Making a new map...");
 		MapGraph theMap = new MapGraph();
 		System.out.print("DONE. \nLoading the map...");
 		GraphLoader.loadRoadMap("data/testdata/simpletest.map", theMap);
-		System.out.println("DONE.");
+		System.out.println("DONE.");*/
 		
 		// You can use this method for testing.  
 		
-		/* Use this code in Week 3 End of Week Quiz
+		/* Use this code in Week 3 End of Week Quiz*/
 		MapGraph theMap = new MapGraph();
 		System.out.print("DONE. \nLoading the map...");
 		GraphLoader.loadRoadMap("data/maps/utc.map", theMap);
@@ -322,7 +331,6 @@ public class MapGraph {
 		List<GeographicPoint> route = theMap.dijkstra(start,end);
 		List<GeographicPoint> route2 = theMap.aStarSearch(start,end);
 
-		*/
 		
 	}
 	

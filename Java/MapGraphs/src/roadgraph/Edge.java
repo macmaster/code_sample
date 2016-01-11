@@ -38,8 +38,27 @@ public class Edge {
 		return length;
 	}
 
-	public String getRoadName(){
-		return roadName;
+	public double RoadMultiplier(){
+		if(roadType.equals("motorway")||
+		   roadType.equals("motorway_link")||
+		   roadType.equals("trunk")){
+			return 1.0;
+		}
+		else if(roadType.equals("primary")||
+				roadType.equals("primary_link")||
+				roadType.equals("secondary")||
+				roadType.equals("secondary_link")){
+			return 1.1;
+		}
+		else if(roadType.equals("residential")||
+				roadType.equals("living_street")||
+				roadType.equals("tertiary")||
+				roadType.equals("unclassified")){
+			return 1.4;
+		}
+		else{
+			return 1.0;
+		}
 	}
 	
 }
