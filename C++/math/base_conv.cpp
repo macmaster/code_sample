@@ -29,12 +29,15 @@
 		 //welcome prompt
 		 cout << "Welcome to Base Converter" << endl;
 		 cout << "Enter your number: "; cin >> input;
+		 
+		 // init input & output
 		 input = uppercase(input);
+		 output = "";
 		 
 		 //init sign, total, and bases
 		 sign = 1, total = 0;
-		 cout << "Enter your base: "; cin >> base;
-		 cout << "Enter your new base: "; cin >> new_base;
+		 cout << "Enter its base: "; cin >> base;
+		 cout << "Enter its new base: "; cin >> new_base;
 		 
 		 // cout << "input: " << input << endl; // input debug print
 		 
@@ -55,7 +58,6 @@
 					input = input.substr(1);
 				}
 			
-			
 			//calculate total
 			int place = 0;
 			for(string::reverse_iterator itr = input.rbegin(); itr != input.rend(); itr++){
@@ -68,14 +70,27 @@
 				total += val;
 				place++;
 			}
+		
+		//output number
+		 cout << "decimal output: " << sign*total << endl; // output debug print
+			
+			
+			//convert to new_base
+			while(total > 0){
+				char char_val = char_map[total % new_base];
+				total /= new_base;
+				output.insert(output.begin(), char_val);
+			}
 		 }
 		 catch(const char* exception){
 			 cout << exception << endl;
 		 }
+		 catch(...){
+			 cout << "Error: (Unknown Error) :p" << endl; 
+		 }
 		 
-		 
-		 //output number
-		 cout << "decimal output: " << total << endl; // output debug print
+		 // ouput number
+		 cout << "Your new number in base " << new_base << " is: " << output << endl;
 		 //quit prompt
 		 cout << "Would you like to quit (y/n)? "; cin >> flag;
 		 
