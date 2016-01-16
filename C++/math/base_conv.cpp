@@ -72,7 +72,7 @@
 			}
 		
 		//output number
-		 cout << "decimal output: " << sign*total << endl; // output debug print
+		 cout << "Decimal Total: " << sign*total << endl; // output debug print
 			
 			
 			//convert to new_base
@@ -81,6 +81,11 @@
 				total /= new_base;
 				output.insert(output.begin(), char_val);
 			}
+			
+			if(sign == -1){
+				output.insert(output.begin(), '-');
+			}
+			
 		 }
 		 catch(const char* exception){
 			 cout << exception << endl;
@@ -90,9 +95,10 @@
 		 }
 		 
 		 // ouput number
+		 
 		 cout << "Your new number in base " << new_base << " is: " << output << endl;
 		 //quit prompt
-		 cout << "Would you like to quit (y/n)? "; cin >> flag;
+		 cout << "Would you like to quit (y/n)? "; cin >> flag; cout << endl;
 		 
 	 }
 	 
