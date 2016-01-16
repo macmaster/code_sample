@@ -9,8 +9,10 @@
  using namespace std;
  
  void fill_maps(map<char, int>& value_map, map<char, int>& char_map);
- void check_base(int base);
+ void inline check_base(int base);
+ void inline clear_input();
  string uppercase(string old_str);
+ 
  
  int main(){
 	 
@@ -28,7 +30,8 @@
 		 
 		 //welcome prompt
 		 cout << "Welcome to Base Converter" << endl;
-		 cout << "Enter your number: "; cin >> input;
+		 cout << "Enter your number: "; cin >> input; clear_input();
+		 
 		 
 		 // init input & output
 		 input = uppercase(input);
@@ -36,8 +39,10 @@
 		 
 		 //init sign, total, and bases
 		 sign = 1, total = 0;
-		 cout << "Enter its base: "; cin >> base;
-		 cout << "Enter its new base: "; cin >> new_base;
+		 cout << "Enter its base: "; 
+		 if(!(cin >> base)) clear_input; //gaurd bad input
+		 cout << "Enter its new base: "; 
+		 if(!(cin >> new_base)) clear_input(); 
 		 
 		 // cout << "input: " << input << endl; // input debug print
 		 
@@ -62,8 +67,14 @@
 			int place = 0;
 			for(string::reverse_iterator itr = input.rbegin(); itr != input.rend(); itr++){
 				int val = value_map[*itr];
-				if(val >= base)
+				if((*itr < 'A' || *itr > 'Z')&&(*itr < '0' || *itr > '9')){
+					total = 0;
 					throw "Error: Number is invalid!";
+				}
+				if(val >= base){
+					total = 0;
+					throw "Error: Number is not in base set!";
+				}
 				for(int i = 0; i < place; i++){
 					val *= base;
 				}
@@ -71,9 +82,16 @@
 				place++;
 			}
 		
-		//output number
-		 cout << "Decimal Total: " << sign*total << endl; // output debug print
+			//output number
+			 cout << "Decimal Total: " << sign*total << endl; // output debug print
 			
+			//special conditions
+			if(sign == -1){ 
+				output.insert(output.begin(), '-'); //negative number
+			}
+			if(total == 0){
+				output.insert(output.begin(),'0');  //zero number
+			}
 			
 			//convert to new_base
 			while(total > 0){
@@ -82,9 +100,7 @@
 				output.insert(output.begin(), char_val);
 			}
 			
-			if(sign == -1){
-				output.insert(output.begin(), '-');
-			}
+			
 			
 		 }
 		 catch(const char* exception){
@@ -95,10 +111,9 @@
 		 }
 		 
 		 // ouput number
-		 
 		 cout << "Your new number in base " << new_base << " is: " << output << endl;
 		 //quit prompt
-		 cout << "Would you like to quit (y/n)? "; cin >> flag; cout << endl;
+		 cout << "Would you like to quit (y/n)? "; cin >> flag; cout << endl; clear_input();
 		 
 	 }
 	 
@@ -124,6 +139,11 @@
 		throw "Error: base too low!";
 	 else if(base > 36)
 		throw "Error: base too high!";
+ }
+ 
+ void inline clear_input(){
+	 cin.clear();
+	 cin.ignore(1000,'\n');
  }
  
  string uppercase(string old_str){
