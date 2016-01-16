@@ -18,44 +18,55 @@
 	 int base = 0, new_base = 0;
 	 int sign = 1, total = 0;
 	 string input, output;
-	 map <char, int> value_map; 
-	 map <int, char> char_map;
+	 map<char, int> value_map; 
+	 map<int, char> char_map;
 	 
 	 //init base & val map
-	 fill_maps(value_map, char_map);
+	 fill_maps((map<char, int>&)value_map, (map<char, int>&)char_map);
 	 
 	 while((flag != 'y') && (flag != 'Y')){
 		 
 		 //welcome prompt
 		 cout << "Welcome to Base Converter" << endl;
 		 cout << "Enter your number: "; cin >> input;
+		 input = uppercase(input);
 		 
 		 //init sign, total, and bases
 		 sign = 1, total = 0;
 		 cout << "Enter your base: "; cin >> base;
 		 cout << "Enter your new base: "; cin >> new_base;
 		 
-		 // cout << "input: " << input << cout << endl; // input debug print
+		 // cout << "input: " << input << endl; // input debug print
 		 
 		 try{
-			
+			 
+			//check for valid bases
 			check_base(base);
-			check_base(new_base);			
-			
-			string::iterator itr = input.begin();
+			check_base(new_base);
 			
 			// parse sign
-			if(itr != input.end())
-				if(*itr == '+'){
+			if(!input.empty())
+				if(input[0] == '+'){
 					sign = 1;
-					itr++;
-				else if(*itr == '-'){
+					input = input.substr(1);
+				}
+				else if(input[0] == '-'){
 					sign = -1;
-					itr++;
+					input = input.substr(1);
 				}
 			
-			while(itr != input.end()){
-				total += value_map.get(*itr);
+			
+			//calculate total
+			int place = 0;
+			for(string::reverse_iterator itr = input.rbegin(); itr != input.rend(); itr++){
+				int val = value_map[*itr];
+				if(val >= base)
+					throw "Error: Number is invalid!";
+				for(int i = 0; i < place; i++){
+					val *= base;
+				}
+				total += val;
+				place++;
 			}
 		 }
 		 catch(const char* exception){
@@ -63,6 +74,8 @@
 		 }
 		 
 		 
+		 //output number
+		 cout << "decimal output: " << total << endl; // output debug print
 		 //quit prompt
 		 cout << "Would you like to quit (y/n)? "; cin >> flag;
 		 
@@ -73,14 +86,15 @@
  
  void fill_maps(map<char, int>& value_map, map<char, int>& char_map){
 	 //init base & char map
- 	 for(int i = 0, char c = '0'; i < 10; i++, c++){ // nums 0-9
-		 value_map.put(c, i);
-		 char_map.put(i, c);
+	 int i; char c;
+ 	 for(i = 0, c = '0'; i < 10; i++, c++){ // nums 0-9
+		 value_map[c] = i;
+		 char_map[i] =  c;
 	 }
 	 
-	 for(int i = 10, char c = 'A'; i < 36; i++, c++){ // chars A-Z
-		 value_map.put(c, i);
-		 char_map.put(i, c);
+	 for(i = 10, c = 'A'; i < 36; i++, c++){ // chars A-Z
+		 value_map[c] = i;
+		 char_map[i] =  c;
 	 }
  }
  
@@ -92,5 +106,11 @@
  }
  
  string uppercase(string old_str){
-	 
+	 string new_str = old_str;
+	 for(string::iterator itr = new_str.begin(); itr != new_str.end(); itr++){
+		 if(*itr >= 'a' && *itr <= 'z'){// capitalize the letter if it is lowercase
+			 *itr -= 'a'-'A'; //case offset
+		 }
+	 }
+	 return new_str;
  }
