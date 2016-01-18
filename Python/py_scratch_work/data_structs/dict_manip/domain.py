@@ -1,8 +1,8 @@
-# address.py
+# domain.py
 # Ronny MacMaster
 
 
-# 9.5 address.py
+# 9.5 domain.py
 #
 # Read through the mail log.
 # Build a histogram using a dictionary to count how many messages
