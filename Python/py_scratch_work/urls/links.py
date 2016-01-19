@@ -1,4 +1,4 @@
-# pic.py
+# links.py
 # Ronny Macmaster
 
 # Perform an HTTP request to grab the html text from the user url
