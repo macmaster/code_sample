@@ -85,10 +85,7 @@
 			//output number
 			 cout << "Decimal Total: " << sign*total << endl; // output debug print
 			
-			//special conditions
-			if(sign == -1){ 
-				output.insert(output.begin(), '-'); //negative number
-			}
+			//zero condition
 			if(total == 0){
 				output.insert(output.begin(),'0');  //zero number
 			}
@@ -100,6 +97,10 @@
 				output.insert(output.begin(), char_val);
 			}
 			
+			//negative condition
+			if(sign == -1){ 
+				output.insert(output.begin(), '-'); //negative number
+			}
 			
 			
 		 }
