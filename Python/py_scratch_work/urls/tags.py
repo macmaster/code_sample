@@ -20,5 +20,6 @@ except:
     print "Error: cannot read URL"
     exit()
 
+# count the tags
 tag = raw_input("Enter the tag to count: ")
 print "Number of "+ tag +"s: ", len(soup(tag))
