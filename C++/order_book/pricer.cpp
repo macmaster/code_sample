@@ -127,11 +127,7 @@ void AddOrder(string &order_string, map<string, Order> &order_book){
 	
 	// extract order price
 	npos = order_string.find(" ");
-	string price_str = order_string.substr(0, npos);
-	price_str.copy(num_buff, buff_size); 
-	num_buff[price_str.length()] = '\0';
-	for(int i = 0; i < 50; i++)
-		cout<< i << ": " <<  num_buff[i] << endl;
+	string price_str = order_string.substr(0, npos); //////////////////////////////////////////////////////////////////HEEELP ME
 	order_string.erase(0, npos+1);
 	
 }
