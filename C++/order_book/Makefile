@@ -2,22 +2,25 @@
 # Author : Ronny Macmaster
 # Date : 2/1/2016
 
+
+CFLAGS = -I inc -c 
+
 all: pricer
 
-pricer: pricer.o Order.o Util.o
-	g++ -o pricer pricer.o Order.o Util.o 
+pricer: bin/pricer.o bin/Order.o bin/Util.o
+	g++ -o pricer $^
 	
-pricer.o: pricer.cpp
-	g++ -c pricer.cpp
+bin/pricer.o: src/pricer.cpp
+	g++ $(CFLAGS) $< -o bin/pricer.o
 	
-Order.o: Order.cpp
-	g++ -c Order.cpp
+bin/Order.o: src/Order.cpp
+	g++ $(CFLAGS) $< -o bin/Order.o
 
-Util.o: Util.cpp
-	g++ -c Util.cpp
+bin/Util.o: src/Util.cpp
+	g++ $(CFLAGS) $< -o bin/Util.o 
 	
 clean: 
-	rm -rf *.o pricer
+	rm pricer
 
 
 
