@@ -2,8 +2,6 @@
 /* Author: Ronald Macmaster
  * Date: 1/31/2016
  *
- * Compile with C++11
- *
  * Purpose: Analyzes an order book log file. 
    Reads a market data log on standard input. 
    As the book is modified, 
@@ -15,23 +13,21 @@
 	Each time the income or expense changes, it prints the changed value.
  *
  * Inputs: target-size (command_line argument) 
- *																										*/
+ *																				*/
  
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <cstring>
 #include <stdexcept>
 
 #include <map>
-#include <string>
 #include "Order.h"
  
 using namespace std;
 
 void stopwatch();
-void AddOrder(string&, map<string, Order>&);
-void ReduceOrder(string&, map<string, Order>&);
+int stoi(string num_str);
+float stof(string num_str);
 
 int main(int argc, char *args[]){
 	 
@@ -66,22 +62,24 @@ int main(int argc, char *args[]){
 			time_stamp = order_string.substr(0, npos);
 			order_string.erase(0, npos+1);
 			
-			
 			// extract command (Add/Reduce)
 			npos = order_string.find(" ");
-			command = order_string[1];
+			command = order_string.at(1);
 			order_string.erase(0, npos+1);
 			
 			switch(command){
 				case 'A':
-					AddOrder(order_string, order_book);
+					Order::AddOrder(order_string, order_book);
 					break;
 				case 'R':
-					ReduceOrder(order_string, order_book);
+					Order::ReduceOrder(order_string, order_book);
 					break;
 				default:
 					throw invalid_argument("invalid order command!");
 			}
+		}
+		catch(const invalid_argument &ia){
+			cerr << ia.what() << endl;
 		}
 		catch(...){
 			cerr << "Error: Invalid order at time: " << time_stamp << endl;
@@ -99,8 +97,6 @@ int main(int argc, char *args[]){
 void AddOrder(string &order_string, map<string, Order> &order_book){	
 	
 	int npos;
-	const int buff_size = 50;
-	char num_buff[buff_size];
 	string id;
 	ordertype action;
 	float price;
@@ -127,8 +123,10 @@ void AddOrder(string &order_string, map<string, Order> &order_book){
 	
 	// extract order price
 	npos = order_string.find(" ");
-	string price_str = order_string.substr(0, npos); //////////////////////////////////////////////////////////////////HEEELP ME
+	price = stof(order_string.substr(0, npos)); 
 	order_string.erase(0, npos+1);
+	
+	cout << "id: " << id <<  " price: " << price << " action: " << action <<  endl;
 	
 }
 
@@ -157,6 +155,11 @@ void ReduceOrder(string &order_string, map<string, Order> &order_book){
 
 
 #ifdef DEBUG
+/****************************stopwatch()****************************************/
+/* Purpose: Toggle a stopwatch
+ * 1) call it to start the stopwatch
+ * 2) call it to stop the stopwatch and print the results
+/******************************************************************************/
 void stopwatch(){
 	static int flag = 1;
 	static clock_t timer;
@@ -169,3 +172,5 @@ void stopwatch(){
 	flag ^= 1;
 }
 #endif
+
+

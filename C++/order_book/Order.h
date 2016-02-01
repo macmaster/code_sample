@@ -3,7 +3,12 @@
  * Date: 1/31/2016
  *
  * Order class which represents market book orders 									  */
-
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <stdexcept>
+#include <map>
+#include <string>
 using namespace std;
 
 enum ordertype {null, buy, sell};
@@ -35,4 +40,9 @@ class Order{
 		type = copy.type;
 	}
 	
+	static void AddOrder(string &order_string, map<string, Order> &order_book);
+	static void ReduceOrder(string &order_string, map<string, Order> &order_book);
+	
 };
+
+

@@ -1,0 +1,25 @@
+# Pricer makefile
+# Author : Ronny Macmaster
+# Date : 2/1/2016
+
+all: pricer
+
+pricer: pricer.o Order.o Util.o
+	g++ -o pricer pricer.o Order.o Util.o 
+	
+pricer.o: pricer.cpp
+	g++ -c pricer.cpp
+	
+Order.o: Order.cpp
+	g++ -c Order.cpp
+
+Util.o: Util.cpp
+	g++ -c Util.cpp
+	
+clean: 
+	rm -rf *.o pricer
+
+
+
+	
+
