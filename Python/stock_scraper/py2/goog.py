@@ -7,14 +7,33 @@ import smtplib
 # email user at certain threshold
 
 #setup email
-rcver = raw_input("receiver email: ")
-email = raw_input("your gmail: ")
-pword = raw_input("your password: ")
+rcver = raw_input("your email: ")
+email = "macmaster.stocks@gmail.com"
+pword = "Physics17"
 notif_period = int(raw_input("emails every (n) minutes. enter n: "))
+
+# get bollinger band thresholds
+try:
+    bburl = urllib.urlopen("http://www.bollingeronbollingerbands.com/common/getjson.php?"
+                            "xml=price&i=price&l1=0&ct=0&ov=0-20-2-0-0-0-0-0-0-0-0&pc=0&pp=&m=&s=GOOG&w=800&t=0&g=5&q=60")
+    bbdata = bburl.read()
+    bbdata = bbdata[bbdata.rfind('"date":'):] # extract today's bb data
+    regex_low = '"bb_lower1":([0-9.]+)'
+    regex_high = '"bb_upper1":([0-9.]+)'
+    # parse bb prices
+    bb_low = float(re.findall(re.compile(regex_low), bbdata)[0])
+    bb_high = float(re.findall(re.compile(regex_high), bbdata)[0])
+    print bb_low, bb_high
+except:
+    print "failled to get bollinger band data!"
+    exit()
+finally:
+    bburl.close()
+
 
 def email_user(msg):
     #build email content
-    header = "From: %s\r\n" % (email)
+    header = "From: %s\r\n" % ("Ronny's Stock Update")
     header += "To: %s\r\n" % (rcver)
     header += "Subject: Google Stock Price Update\r\n\r\n"
     msg = header + msg
@@ -37,26 +56,20 @@ try:
         # open log
         pricelog = open("goog.txt", "a")
         
-        # get raw data
-        htmlfile = urllib.urlopen('http://finance.yahoo.com/q?s=goog&fr=uh3_finance_web&uhb=uhb2')
-        htmltext = htmlfile.read()
-        
-        # parse price
-        regex = '<span id="yfs_l84_[^.]*">(.+?)</span>'
-        pattern = re.compile(regex)
-        price = re.findall(pattern, htmltext)
-        price = price[0]
+        # get raw data & parse price
+        stockurl = urllib.urlopen('http://download.finance.yahoo.com/d/quotes.csv?s=goog&f=l1')
+        price = stockurl.read().rstrip()
         
         # send email?
-        if txtclock <= 0 and 675 > float(price):
+        if txtclock <= 0 and bb_low > float(price):
             #email
             print("Google is getting cheap!\t" + "price: " + price)
-            email_user("Google is getting cheap!\nprice: "+price)
+            email_user("Google is getting cheap!\n\nprice: " + price)
             txtclock = notif_period * 10
-        elif txtclock <= 0 and 680 < float(price):
+        elif txtclock <= 0 and bb_high < float(price):
             #email
             print("Google is getting expensive!\t" + "price: " + price)
-            email_user("Google is getting expensive!\nprice: "+price)
+            email_user("Google is getting expensive!\n\nprice: " + price)
             txtclock = notif_period * 10
         
         # log & delay
@@ -67,5 +80,5 @@ try:
         pricelog.close()
         
 finally:
-    print("hello world!")
+    print("finished execution!")
     pricelog.close()
