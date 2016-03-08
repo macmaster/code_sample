@@ -1,11 +1,15 @@
-/*******************Cubic_eff.java**************************
- * Solves the famous problem in O(n^3):
+/*******************Linear_eff.java**************************
+ * Solves the famous problem in O(n):
  * Maximum contiguous subsequence sum problem
  * "Given (possibly negative) integers a1, a2, a3, ..., an,
  *  find (and identify the sequence corresponding to) 
  *  the maximum value of sum(ai..aj)
  *  If all the integers are negative,
  *  The maximum contiguous subsequence sum is zero .
+ *
+ * Key Concept: "if the current sum is negative,
+ * we can advance past all subsequences that include it.
+ * ie. advance the outer pointer past the lower subsequence.
  *  
  * Author: Ronny Macmaster
  * Date: 3/8/2016
@@ -13,7 +17,7 @@
 
 import java.util.ArrayList;
 
-public class cubic_eff{
+public class linear_eff{
 	
 	// sum start and end indices
 	public static int start = 0;;
@@ -43,16 +47,14 @@ public class cubic_eff{
 	public static int findsum(ArrayList<Integer> arr){
 		// sum and size
 		int maxsum = 0;
+		int currsum = 0; 
 		int n = arr.size(); 
 		
-		for(int i = 0; i < n; i++){ // pointer 1
-			for(int j = i; j < n; j++){ // pointer 2
-				int currsum = 0; 
-				
+		// i = lower pointer. j = upper pointer
+		for(int i = 0, j = 0; j < n; j++){ // pointer 1
+		
 				// subsequence sum
-				for(int k = i; k <= j; k++){
-					currsum += arr.get(k);
-				}
+				currsum += arr.get(j);
 				
 				// mark maxsum
 				if(currsum > maxsum){
@@ -60,8 +62,12 @@ public class cubic_eff{
 					start = i;
 					end = j;
 				}
-			}	
-		}
+				else if(currsum < 0){
+					currsum = 0; // skip subsequence
+					i = j + 1; // advance base
+				}
+				
+		}	
 		
 		return maxsum;
 		

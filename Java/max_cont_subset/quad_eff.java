@@ -1,5 +1,5 @@
-/*******************Cubic_eff.java**************************
- * Solves the famous problem in O(n^3):
+/*******************Quad_eff.java**************************
+ * Solves the famous problem in O(n^2):
  * Maximum contiguous subsequence sum problem
  * "Given (possibly negative) integers a1, a2, a3, ..., an,
  *  find (and identify the sequence corresponding to) 
@@ -13,7 +13,7 @@
 
 import java.util.ArrayList;
 
-public class cubic_eff{
+public class quad_eff{
 	
 	// sum start and end indices
 	public static int start = 0;;
@@ -46,13 +46,11 @@ public class cubic_eff{
 		int n = arr.size(); 
 		
 		for(int i = 0; i < n; i++){ // pointer 1
+			int currsum = 0; 
 			for(int j = i; j < n; j++){ // pointer 2
-				int currsum = 0; 
 				
 				// subsequence sum
-				for(int k = i; k <= j; k++){
-					currsum += arr.get(k);
-				}
+				currsum += arr.get(j);
 				
 				// mark maxsum
 				if(currsum > maxsum){
