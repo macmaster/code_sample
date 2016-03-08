@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 public class cubic_eff{
 	
+	// sum start and end indices
+	public static int start = 0;;
+	public static int end = 0;;
+	
 	public static void main(String args[]){
 		// build array list {-2, 11, -4, 13, -5, 2}
 		ArrayList<Integer> arr = new ArrayList<Integer>();
@@ -29,9 +33,34 @@ public class cubic_eff{
 		
 		// print sum
 		System.out.println("max sum: " + sum);
+		System.out.print("start: " + start + "   ");
+		System.out.print("end: " + end + "\n\n");
 	}
 	
 	public static int findsum(ArrayList<Integer> arr){
-		return 0;
+		// sum and size
+		int maxsum = 0;
+		int n = arr.size(); 
+		
+		for(int i = 0; i < n; i++){ // pointer 1
+			for(int j = i; j < n; j++){ // pointer 2
+				int currsum = 0; 
+				
+				// subsequence sum
+				for(int k = i; k <= j; k++){
+					currsum += arr.get(k);
+				}
+				
+				// mark maxsum
+				if(currsum > maxsum){
+					maxsum = currsum;
+					start = i;
+					end = j;
+				}
+			}	
+		}
+		
+		return maxsum;
+		
 	}
 }
