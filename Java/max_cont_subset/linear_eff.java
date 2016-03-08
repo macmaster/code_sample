@@ -50,21 +50,21 @@ public class linear_eff{
 		int currsum = 0; 
 		int n = arr.size(); 
 		
-		// i = lower pointer. j = upper pointer
-		for(int i = 0, j = 0; j < n; j++){ // pointer 1
+		// p1 = lower pointer. p2 = upper pointer
+		for(int p1 = 0, p2 = 0; p2 < n; p2++){ 
 		
 				// subsequence sum
-				currsum += arr.get(j);
+				currsum += arr.get(p2);
 				
 				// mark maxsum
 				if(currsum > maxsum){
 					maxsum = currsum;
-					start = i;
-					end = j;
+					start = p1;
+					end = p2;
 				}
 				else if(currsum < 0){
 					currsum = 0; // skip subsequence
-					i = j + 1; // advance base
+					p1 = p2 + 1; // advance base
 				}
 				
 		}	
