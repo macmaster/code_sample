@@ -12,15 +12,15 @@ function n = fib(n)
     g1 = (1+sqrt(5))/2;
     g2 = (1-sqrt(5))/2;
     
-	 % fib[n] = c1*g1^n + c2*g2^n
+    % fib[n] = c1*g1^n + c2*g2^n
     n = c1*g1**n + c2*g2**n;
 end
 
 % optional user prompt
 
-% n = 0;
-% while(n >= 0)
-%     n = input("which fib number? ");
-%     n = sscanf(n, "%d")
-%     fn = fib(n)
-% end
+n = 0;
+while(n >= 0)
+     n = input("which fib number? ");
+     % n = sscanf(n, "%d")
+     fn = fib(n)
+end
