@@ -1,0 +1,26 @@
+div{
+	position: absolute;
+	height: 500px;	width: 500px; 
+}
+
+img{
+	position: absolute;
+}
+
+#rightSide{
+	left: 600px;
+	border-left: 1px solid black;
+}
+
+body{
+	background: #BBEEFF;
+}
+
+h1{
+	color: #AA44AA;
+	text-indent: 30px;
+}
+p{
+	font-weight: bold;
+	text-indent: 30px;
+}

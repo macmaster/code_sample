@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matching Game</title>
+	<meta author="Ronny MacMaster"></meta>
+	<!--<link rel="stylesheet" href="style.css">-->
+	<style>
+		div{position: absolute;height: 500px;	width: 500px;}
+		img{position: absolute;}
+		#rightSide{left: 600px;border-left: 1px solid black;}
+		body{background: #BBEEFF;}
+		h1{color: #AA44AA;}
+	</style>
+	<script>
+		function generateFaces(){
+			var numberOfFaces = 5;
+			var theLeftSide = document.getElementById("leftSide");
+			for(var i = 0; i < numberOfFaces; i++){
+				var smile = document.createElement("img");
+				smile.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+				smile.style.top = Math.floor(Math.random() * 400) + "px";
+				smile.style.left = Math.floor(Math.random() * 400) + "px";
+				theLeftSide.appendChild(smile);
+			}
+			
+		}
+	</script>
+</head>
+
+<body onload="generateFaces()">
+	<h1 id="myTitle">Matching Game</h1>
+	<p>Click on the extra smiley face to the left.</p>
+	<div id="leftSide"></div>
+  <div id="rightSide"></div>
+</body>
+</html>
+	

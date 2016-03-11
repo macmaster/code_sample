@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matching Game</title>
+	<meta author="Ronny MacMaster"></meta>
+	<!--<link rel="stylesheet" href="style.css">-->
+	<style>
+		div{position: absolute;height: 500px;	width: 500px;}
+		img{position: absolute;}
+		#rightSide{left: 600px;border-left: 1px solid black;}
+		body{background: #BBEEFF;}
+		h1{color: #AA44AA;}
+	</style>
+</head>
+
+<body onload="GenerateFaces()">
+	<h1 id="myTitle">Matching Game</h1>
+	<p>Click on the extra smiley face to the left.</p>
+	<div id="leftSide"></div>
+  <div id="rightSide"></div>
+</body>
+<footer>
+	<script>
+		var numberOfFaces = 5;
+		var Body = document.getElementsByTagName("body")[0];
+		var LeftSide = document.getElementById("leftSide");
+		var RightSide = document.getElementById("rightSide");
+		Body.onclick = GameOver;
+		function GenerateFaces(){
+
+			for(var i = 0; i < numberOfFaces; i++){
+				//create left smileys
+				var smile = document.createElement("img");
+				smile.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+				smile.style.top = Math.floor(Math.random() * 400) + "px";
+				smile.style.left = Math.floor(Math.random() * 400) + "px";
+				LeftSide.appendChild(smile);
+			}
+			//copy left smileys to right side
+			var rightImages = LeftSide.cloneNode(true);
+			rightImages.removeChild(rightImages.lastChild);
+			RightSide.appendChild(rightImages);
+			LeftSide.lastChild.onclick = NextLevel;
+		}
+		function NextLevel(event){
+			event.stopPropagation();
+			numberOfFaces += 5;
+			//clear smileys
+			var smiley = LeftSide.firstChild;
+			while(smiley){
+				var node = smiley.parentNode.firstChild;
+				smiley = smiley.nextSibling;
+				node.parentNode.removeChild(node);
+			}
+			smiley = RightSide.firstChild;
+			while(smiley){
+				var node = smiley.parentNode.firstChild;
+				smiley = smiley.nextSibling;
+				node.parentNode.removeChild(node);
+			}
+			GenerateFaces();
+		}
+		function GameOver(event){
+			alert("Game Over! You clicked the wrong smiley!");
+			Body.onclick = null;
+			LeftSide.lastChild.onclick = null;
+		}
+		
+	</script>
+</footer>
+</html>
+	
