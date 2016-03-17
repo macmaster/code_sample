@@ -102,8 +102,13 @@ for song in tracks:
     c.execute('''
     SELECT id FROM Genre WHERE name = ?''', (genre,))
     genre_id = c.fetchone()[0]
-
-
+    
+    # Add Song
+    c.execute('''
+    INSERT OR REPLACE INTO Track (title, album_id, genre_id, len, rating, count)
+    VALUES (?, ?, ?, ?, ?, ?)''', (name, album_id, genre_id, length, rating, count))
+    
+    
 # Close Database
 c.close()
 conn.commit()
