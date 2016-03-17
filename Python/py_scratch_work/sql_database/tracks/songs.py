@@ -68,6 +68,7 @@ tracks = root.findall("dict/dict/dict")
 for song in tracks:
     if lookup(song, "Track ID") is None: continue
 
+    # Parse song fields
     name = lookup(song, "Name")
     artist = lookup(song, "Artist")
     album = lookup(song, "Total Time")
@@ -80,6 +81,27 @@ for song in tracks:
        album is None or genre is None: continue
 
     print name, artist, album, genre
+
+    # Add Artist
+    c.execute('''
+    INSERT OR IGNORE INTO Artist (name) VALUES (?)''', (artist,))
+    c.execute('''
+    SELECT id FROM Artist WHERE name = ?''', (artist,))
+    artist_id = c.fetchone()[0]
+
+    # Add Album
+    c.execute('''
+    INSERT OR IGNORE INTO Album (title, artist_id) VALUES (?,?)''', (album,artist_id))
+    c.execute('''
+    SELECT id FROM Album WHERE title = ?''', (album,))
+    album_id = c.fetchone()[0]
+
+    # Add Genre
+    c.execute('''
+    INSERT OR IGNORE INTO Genre (name) VALUES (?)''', (genre,))
+    c.execute('''
+    SELECT id FROM Genre WHERE name = ?''', (genre,))
+    genre_id = c.fetchone()[0]
 
 
 # Close Database
