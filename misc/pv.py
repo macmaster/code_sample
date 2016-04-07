@@ -1,5 +1,10 @@
+## pv.py
+# Calculates the present value of a cash flow
+# Author: Ronny Macmaster
+# Date: 4/6/2016
+
 import os
-import optparse
+from optparse import OptionParser
 
 def clear():
     """clears the system console
@@ -32,12 +37,28 @@ def pv(r, cf):
         return value
 
 def main():
-    parser.add_option("-r")
-    if (len(args) < 2):
-        print "invalid number of arguments \n\
-        python pv.py <interest rate> <"
-        
+    # parse command line args
+    parser = OptionParser()
+    parser.add_option("-r", "--rate", help="interest rate")
+    parser.add_option("-c", "--cashflow", help="cash flow delited by ,")
+    (options, args) = parser.parse_args()
+
+    try: # convert interest rate
+        rate = float(options.rate)
+    except:
+        print "please enter a valid % interest rate!"
+        print "ex. -r 1"
+        exit()
+    try: #convert cashflow
+        cashflow = map(float, options.cashflow.split(","))
+    except:
+        print "please enter a valid cashflow string of floats!"
+        print "ex. -c 1,2,3,4,5"
+        exit()
+
+    print "present value: " + "%.2f" % pv(rate, cashflow)
+    
+    
 if __name__ == "__main__":
     main()
         
-
