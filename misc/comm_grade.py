@@ -21,28 +21,28 @@ def main():
     assignments = list()
     
     # team / individual assignments
-    assignments.append(Assignment("job packet", 100, 10))
-    assignments.append(Assignment("proposal memo", 0, 7))
-    assignments.append(Assignment("proposal presentation", 0, 5))
-    assignments.append(Assignment("networking presentation", 0, 5))
-    assignments.append(Assignment("ethics memo", 0, 10))
-    assignments.append(Assignment("research memo", 0, 5))
-    assignments.append(Assignment("team plan", 0, 8))
-    assignments.append(Assignment("design review presentation", 0, 10))
-    assignments.append(Assignment("problem statement", 0, 20))
+    assignments.append(Assignment("job packet", 90, 10))
+    assignments.append(Assignment("proposal memo", 85, 7))
+    assignments.append(Assignment("proposal presentation", 95, 5))
+    assignments.append(Assignment("networking presentation", 95, 5))
+    assignments.append(Assignment("ethics memo", 85, 10))
+    assignments.append(Assignment("research memo", 92, 5))
+    assignments.append(Assignment("team plan", 95, 8))
+    assignments.append(Assignment("design review presentation", 90, 10))
+    assignments.append(Assignment("problem statement", 90, 20))
     
     # participation
-    assignments.append(Assignment("participation 1", 0, 8))
-    assignments.append(Assignment("participation 2", 0, 12))
+    assignments.append(Assignment("participation 1", 98, 8))
+    assignments.append(Assignment("participation 2", 95, 12))
 
     grade = 0
     weight = 0
     for a in assignments:
-        grade  += a.grade
-        weight += a.weigt
+        grade  += float(a.grade * a.weight) / 100.0
+        weight += a.weight
 
     try:
-        grade = ((grade/float(weight)) * 100)
+        grade = ((grade/float(weight))) * 100.0
         print "your grade is %.2f" % grade
     except:
         print "no grade in the class yet"

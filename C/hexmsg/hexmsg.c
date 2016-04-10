@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
 	
 	/* user's msg*/
 	int n  = 0;
-	int *hexmsg;
+	short int *hexmsg;
 	char *msg = (char *)malloc(sizeof(char) * MAX_LEN); 
 	
 	
@@ -35,29 +35,31 @@ int main(int argc, char *argv[]){
 	n = strlen(msg);
 	printf("your message: %s\n", msg);
 	hexmsg = get_hexmsg(msg, n);
-	print_hexmsg(hexmsg, n);
+	print_hexmsg(hexmsg, n+2);
 	
 	free(msg);
 	free(hexmsg);
 	
 }
 
-short int *get_hexname(char *name, int n){
+short int *get_hexmsg(char *msg, int n){
 	
-	/* hex name */
-	short int *xname = (short int *)malloc(sizeof(short int) * n);
+	/* hex msg */
+	short int *xmsg = (short int *)malloc(sizeof(short int) * n + 2);
 	int i; 
 	
 	/* fill hex array */
-	for(i = 0; i < n; i++){
-		xname[i] = (int)name[i];
+	xmsg[0] = 0x03; /* start text */
+	for(i = 1; i < n + 1; i++){
+		xmsg[i] = (int)msg[i-1];
 	}
+	xmsg[i] = 0x02; /* end text */
 	
-	return xname;
+	return xmsg;
 	
 }
 
-void print_hexname(short int *name, int n){
+void print_hexmsg(short int *msg, int n){
 	/* stream vars */
 	int i = 0, hex;
 	
@@ -70,8 +72,14 @@ void print_hexname(short int *name, int n){
 		}
 		
 		/* print hex value*/
-		hex = *(name + i);
-		printf("%x", hex);
+		hex = *(msg + i);
+		printf("%02X", hex);
+	}
+	
+	/* pad msg end */
+	if((i % 2)){
+		putchar('0');
+		putchar('0');
 	}
 	putchar('\n');
 	
