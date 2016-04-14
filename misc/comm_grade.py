@@ -1,4 +1,6 @@
 # comm_grade.py
+# 
+# desc:
 # calculates your grade in fagelson's EE 333T class
 # adjust using source code
 #
@@ -21,19 +23,19 @@ def main():
     assignments = list()
     
     # team / individual assignments
-    assignments.append(Assignment("job packet", 90, 10))
+    #assignments.append(Assignment("job packet", 90, 10))
     assignments.append(Assignment("proposal memo", 85, 7))
     assignments.append(Assignment("proposal presentation", 95, 5))
     assignments.append(Assignment("networking presentation", 95, 5))
-    assignments.append(Assignment("ethics memo", 85, 10))
+    assignments.append(Assignment("ethics memo", 92, 10))
     assignments.append(Assignment("research memo", 92, 5))
     assignments.append(Assignment("team plan", 95, 8))
-    assignments.append(Assignment("design review presentation", 90, 10))
-    assignments.append(Assignment("problem statement", 90, 20))
+    #assignments.append(Assignment("design review presentation", 90, 10))
+    #assignments.append(Assignment("problem statement", 90, 20))
     
     # participation
     assignments.append(Assignment("participation 1", 98, 8))
-    assignments.append(Assignment("participation 2", 95, 12))
+    #assignments.append(Assignment("participation 2", 95, 12))
 
     grade = 0
     weight = 0
