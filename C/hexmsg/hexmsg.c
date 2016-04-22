@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_LEN 100
+#define MAX_LEN 200
 
 void print_hexmsg(short int *msg, int n);
 short int *get_hexmsg(char *msg, int n);
