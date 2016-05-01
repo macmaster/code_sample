@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace bubble{
+namespace selection{
 	
-	public class BubbleSort{
+	public class SelectionSort{
 		
 		public static void Main(string[] args){
 			
@@ -23,14 +23,14 @@ namespace bubble{
 			}
 			
 			
-			// bubble sort loop
-			for(int odx = n; odx > 1; odx--){
-				for(int idx = 1; idx < odx; idx++){
+			// selection sort loop
+			for(int odx = 0; odx < n; odx++){
+				for(int idx = odx + 1; idx < n; idx++){
 					// xor-swap check 
-					if(arr[idx] < arr[idx-1]){ 
-						arr[idx] ^=  arr[idx-1];
-						arr[idx-1] ^= arr[idx];
-						arr[idx] ^= arr[idx-1];
+					if(arr[idx] < arr[odx]){ 
+						arr[idx] ^=  arr[odx];
+						arr[odx] ^= arr[idx];
+						arr[idx] ^= arr[odx];
 					}
 				}
 			}
