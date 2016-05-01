@@ -31,7 +31,7 @@ namespace TanjiExtension1
         {
             // send a wave and msg packet
             string msg = "Get rekt bro!!!";
-            Connection.SendToServerAsync(3634, 1); // dance
+            Connection.SendToServerAsync(2198, 1); // dance
             for (int i = 0; i < 20; i++)
             {
                 Connection.SendToServerAsync(3871, msg, 4, 0);
@@ -43,12 +43,12 @@ namespace TanjiExtension1
         {
             for (int i = 0; i < 400; i++)
             {
-                Connection.SendToServerAsync(3634, i % 2); // dance
+                Connection.SendToServerAsync(2198, i % 2); // dance
                 System.Threading.Thread.Sleep(50);
             }
-            Connection.SendToServerAsync(3634, 0); // dance
+            Connection.SendToServerAsync(2198, 1); // dance
             System.Threading.Thread.Sleep(50);
-            Connection.SendToServerAsync(3634, 0); // dance
+            Connection.SendToServerAsync(2198, 1); // dance
 
         }
 
