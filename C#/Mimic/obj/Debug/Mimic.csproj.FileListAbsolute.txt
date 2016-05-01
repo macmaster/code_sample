@@ -1,0 +1,11 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\bin\Debug\Mimic.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\bin\Debug\Sulakore.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\bin\Debug\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\obj\Debug\Mimic.csprojResolveAssemblyReference.cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\obj\Debug\Mimic.MimicForm.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\obj\Debug\Mimic.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\obj\Debug\Mimic.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\obj\Debug\Mimic.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\bin\Debug\Mimic.dll.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\bin\Debug\Mimic.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\Mimic\obj\Debug\Mimic.dll

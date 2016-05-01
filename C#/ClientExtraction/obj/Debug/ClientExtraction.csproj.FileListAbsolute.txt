@@ -1,0 +1,11 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\obj\Debug\ClientExtraction.csprojResolveAssemblyReference.cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\obj\Debug\ClientExtraction.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\obj\Debug\ClientExtraction.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\obj\Debug\ClientExtraction.ClientForm.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\bin\Debug\ClientExtraction.dll.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\bin\Debug\ClientExtraction.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\bin\Debug\ClientExtraction.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\bin\Debug\Sulakore.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\bin\Debug\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\obj\Debug\ClientExtraction.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\ClientExtraction\obj\Debug\ClientExtraction.pdb

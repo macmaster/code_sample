@@ -98,10 +98,9 @@
             // 
             // IDBox
             // 
-            this.IDBox.Hexadecimal = true;
             this.IDBox.Location = new System.Drawing.Point(59, 152);
             this.IDBox.Maximum = new decimal(new int[] {
-            255,
+            2147483647,
             0,
             0,
             0});

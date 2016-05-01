@@ -24,8 +24,8 @@ namespace FFBot
         public Form1()
         {
             // attach 
-            Triggers.OutAttach(1985, OnSpaceSelected); // walk packet
-            Triggers.InAttach(1492, OnFurniPlaced); // move packet
+            Triggers.OutAttach(2388, OnSpaceSelected); // walk packet
+            Triggers.InAttach(1790, OnFurniPlaced); // move packet
             Triggers.InAttach(670, OnFurniPlaced); // placed packet
             InitializeComponent();
         }
@@ -84,7 +84,7 @@ namespace FFBot
                 // move to that space
                 if (space.Equals(furni_space))
                 {
-                    Connection.SendToServerAsync(1985, space.Item1, space.Item2);
+                    Connection.SendToServerAsync(2388, space.Item1, space.Item2);
                 }
 
                 // debug print space

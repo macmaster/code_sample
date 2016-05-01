@@ -1,0 +1,11 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\obj\Debug\FFBot.csprojResolveAssemblyReference.cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\obj\Debug\FFBot.Form1.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\obj\Debug\FFBot.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\obj\Debug\FFBot.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\bin\Debug\FFBot.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\obj\Debug\FFBot.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\bin\Debug\Sulakore.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\bin\Debug\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\bin\Debug\FFBot.dll.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\bin\Debug\FFBot.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\FFBot\obj\Debug\FFBot.dll

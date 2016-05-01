@@ -26,3 +26,8 @@ phr-893-36.hd-190-1.ch-3342-1430-85.lg-280-64.sh-295-90.ha-3394-1429-88.ca-3292-
 
 // change name
 [0][0][0][13][4]Ÿ[0][9]fxcknbtch
+
+// hc dance is same packet except you add a 2/3 or 4
+
+pets
+[0][0][0][0]}[0][9]%½[0][0]/Î[0]test[10]14[10]7F89B2[0][0][0][1]

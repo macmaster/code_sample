@@ -1,0 +1,14 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\TanjiExtension1.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\obj\Debug\TanjiExtension1.csprojResolveAssemblyReference.cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\obj\Debug\TanjiExtension1.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\obj\Debug\TanjiExtension1.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\obj\Debug\TanjiExtension1.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\Tangine.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\FlashInspect.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\Tangine.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\FlashInspect.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\obj\Debug\TanjiExtension1.Form1.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\TanjiExtension1.dll.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\bin\Debug\TanjiExtension1.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\TanjiExtension1\TanjiExtension1\obj\Debug\TanjiExtension1.dll

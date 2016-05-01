@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tangine</name>
+    </assembly>
+    <members>
+        <member name="T:Tangine.Habbo.HGame">
+            <summary>
+             Represents the Habbo Hotel flash client.
+            </summary>
+        </member>
+        <member name="P:Tangine.Habbo.HGame.LoggerCallback">
+            <summary>
+            Gets or sets the delegate to be called when a log has been written.
+            </summary>
+        </member>
+        <member name="P:Tangine.Habbo.HGame.OutgoingMessages">
+            <summary>
+            Gets the dictionary of Outgoing message classes with the header as the key.
+            </summary>
+        </member>
+        <member name="P:Tangine.Habbo.HGame.IncomingMessages">
+            <summary>
+            Gets the dictionary of Incoming message classes with the header as they key.
+            </summary>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tangine.Habbo.HGame"/> class based on the specified file path.
+            </summary>
+            <param name="path">The file path of the Shockwave Flash(SWF) file.</param>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.#ctor(System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tangine.Habbo.HGame"/> class based on the specified array of bytes.
+            </summary>
+            <param name="data">The array of bytes representing the Shockwave Flash(SWF) file.</param>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.BypassOriginCheck">
+            <summary>
+            Modifies the bytecode to allow the client to run from anywhere.
+            </summary>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.BypassRemoteHostCheck">
+            <summary>
+            Modifies the bytecode to allow the client to connect to anywhere.
+            </summary>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GenerateMessageHashes">
+            <summary>
+            Generates, and caches a unique MD5 hash for every Outgoing/Incoming message class.
+            </summary>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.ReplaceRSAKeys(System.Int32,System.String)">
+            <summary>
+            Injects the specified public RSA keys into the bytecode that handles the verification of the received primes.
+            </summary>
+            <param name="exponent">The public exponent.</param>
+            <param name="modulus">The public modulus.</param>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.IsMessageClass(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns a value that determines whether the specified class is associated with an Outgoing/Incoming header.
+            </summary>
+            <param name="asClass">The class to check whether it's an Outgoing/Incoming message class.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.IsMessageOutgoing(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns a value that determines whether the specified message class is an Outgoing type message class.
+            </summary>
+            <param name="messageClass">The message class to check whether it is an Outoing message class type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.IsMessageReferenced(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns a value that determines whether the specified message class is used/referenced in the bytecode.
+            </summary>
+            <param name="messageClass">The message class to check whether it is being referenced.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetClientRevision">
+            <summary>
+            Returns the hardcoded client revision string from the Outgoing[4000] message class.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetOutgoingMessage(System.UInt16)">
+            <summary>
+            Returns the Outgoing message class associated with the specified header.
+            </summary>
+            <param name="header">The header associated with the Outgoing message class.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetIncomingMessage(System.UInt16)">
+            <summary>
+            Returns the Incoming message class associated with the specified header.
+            </summary>
+            <param name="header">The header associated with the Incoming message class.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetMessageHash(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns a unique MD5 hash generated from various information contained in the message class.
+            </summary>
+            <param name="messageClass">The Outgoing/Incoming message class to create the unique hash from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetMessageHeader(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns the header associated with the specified Outgoing/Incoming message class.
+            </summary>
+            <param name="messageClass">The Outgoing/Incoming message class to grab the associated header from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetMessages(System.String)">
+            <summary>
+            Returns a read-only list of message classes associated with the specified unique MD5 hash.
+            </summary>
+            <param name="hash">The unique MD5 hash associated with the message(s).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetMessageHeaders(System.String)">
+            <summary>
+            Returns a read-only list of headers associated with the specified unique MD5 hash.
+            </summary>
+            <param name="hash">The unique MD5 hash associated with the header(s).</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetIncomingMessageParser(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns the Incoming message's parser class.
+            </summary>
+            <param name="messageClass">The Incoming message class to extract the parser class from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.GetMessageReferences(FlashInspect.ActionScript.ASClass)">
+            <summary>
+            Returns an enumerable containing references for the specified message class.
+            </summary>
+            <param name="messageClass">The message class being referenced.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tangine.Habbo.HGame.Disassemble">
+            <summary>
+            Dissassembles the Habbo Hotel flash client.
+            </summary>
+        </member>
+        <member name="T:Tangine.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Tangine.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Tangine.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>
