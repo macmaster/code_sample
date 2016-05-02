@@ -36,7 +36,7 @@ architecture control_signals of multiplier_adder is
 	-- arithmetic values
 	signal xval: std_logic_vector(2 downto 0);
 	signal zval: std_logic_vector(4 downto 0);
-	signal addout: std_logic_vector(3 downto 0); -- mult adder output
+	signal addout: std_logic_vector(3 downto 0); 
 	
 begin
 	-- update the arithmetic outputs
@@ -54,25 +54,32 @@ begin
 		
 		-- rising edge trigger
 		if Clock'event and Clock = '1' then 
+		
 			if LdW = '1' then -- load ACC result
 				ACC(8 downto 0) <= W(8 downto 0);
 			end if;
+			
 			if LdX = '1' then -- load multiplicand
 				xval(2 downto 0) <= X(2 downto 0);
 			end if;
+			
 			if LdY = '1' then -- load multiplier / rst acc
 				ACC(8 downto 5) <= "0000";
 				ACC(4 downto 0) <= Y(4 downto 0); 
 			end if;
+			
 			if LdZ = '1' then -- load addend
 				zval(4 downto 0) <= Z(4 downto 0);
 			end if;
+			
 			if Ad = '1' then -- load ACC with mult sum
 				ACC(8 downto 5) <= addout; 
 			end if;
+			
 			if Sh = '1' then -- shift the ACC
 				ACC(8 downto 0) <= '0' & ACC(8 downto 1); 
 			end if;
+			
 			state <= nextstate;
 		end if;
 	end process;
@@ -85,8 +92,31 @@ begin
 		LdW <= '0'; LdX <= '0';	
 		LdY <= '0'; LdZ <= '0';
 		Ad <= '0'; Sh <= '0'; 
-
+		
+		-- state control
+		case state is
+		when 0 => -- Load X
+			if(St = '1') then
+				LdX <= '1';
+				nextstate <= 1;
+			else
+				nextstate <= 0;
+			end if;
+			
+		when 1 => -- Load Y
+			LdY <= '1';
+			nextstate <= 2;
+			
+		when 2 => -- Load Z
+			LdZ <= '1';
+			nextstate <= 3;
+		
+		
+		-- default pass
+		when others =>
+			null;
+			
+		end case;
 	end process;
-	
 	
 end control_signals;
