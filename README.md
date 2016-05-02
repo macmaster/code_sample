@@ -24,7 +24,7 @@ Random samples of my side / school code
 * _MapGraphs_ - Search visualization of route planning software  
   (Similar to Google Maps Directions planner)    
 * _UnfoldingMaps_ - Geodata visualization (population and earthquakes)  
-* _Max Continuous Subset Sum_ - O(n^3), O(n^2) and O(n) solution  
+* Max Continuous Subset Sum - O(n^3), O(n^2) and O(n) solution  
 
 5) **Javascript**  
 * _Matching Smilies_ - Memory-based web game  
