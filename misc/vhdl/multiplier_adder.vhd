@@ -26,7 +26,7 @@ end multiplier_adder;
 
 architecture control_signals of multiplier_adder is
 	-- state machine
-	signal state, nextstate: integer range 0 to 9;
+	signal state, nextstate: integer range 0 to 13;
 	
 	-- register signals
 	signal ACC, W: std_logic_vector(8 downto 0); 
@@ -110,7 +110,72 @@ begin
 		when 2 => -- Load Z
 			LdZ <= '1';
 			nextstate <= 3;
-		
+
+		when 3 => -- M Check 1
+			if(M = '1') then
+				Ad <= '1';
+				nexstate <= 4;
+			else
+				Sh <= '1';
+				nextstate <= 5;
+			end if;
+			
+		when 4 => -- M Add 1
+			Sh <= '1';
+			nextstate <= 5;
+
+		when 5 => -- M Check 2
+			if(M = '1') then
+				Ad <= '1';
+				nexstate <= 6;
+			else
+				Sh <= '1';
+				nextstate <= 7;
+			end if;
+			
+		when 6 => -- M Add 2
+			Sh <= '1';
+			nextstate <= 7;
+
+		when 7 => -- M Check 3
+			if(M = '1') then
+				Ad <= '1';
+				nexstate <= 8;
+			else
+				Sh <= '1';
+				nextstate <= 9;
+			end if;
+			
+		when 8 => -- M Add 3
+			Sh <= '1';
+			nextstate <= 9;
+
+		when 9 => -- M Check 4
+			if(M = '1') then
+				Ad <= '1';
+				nexstate <= 10;
+			else
+				Sh <= '1';
+				nextstate <= 11;
+			end if;
+			
+		when 10 => -- M Add 4
+			Sh <= '1';
+			nextstate <= 11;
+
+		when 11 => -- M Check 5
+			if(M = '1') then
+				Ad <= '1';
+				nexstate <= 12;
+			else
+				Sh <= '1';
+				nextstate <= 13;
+			end if;
+			
+		when 12 => -- M Add 5
+			Sh <= '1';
+			nextstate <= 13;
+
 		
 		-- default pass
 		when others =>
