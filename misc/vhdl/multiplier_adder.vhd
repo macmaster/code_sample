@@ -41,8 +41,8 @@ architecture control_signals of multiplier_adder is
 begin
 	-- update the arithmetic outputs
 	Result <= ACC(7 downto 0);
-	W <= ACC + ("0000" & Z(4 downto 0));
-	addout <= ('0' & ACC(7 downto 5)) + ('0' & X(2 downto 0));
+	W <= ACC + ("0000" & zval(4 downto 0));
+	addout <= ('0' & ACC(7 downto 5)) + ('0' & xval(2 downto 0));
 	
 	-- clock the registers
 	process(Clock, Reset) 
