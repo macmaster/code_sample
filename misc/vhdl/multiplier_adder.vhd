@@ -192,7 +192,7 @@ begin
 		
 		-- default pass
 		when others =>
-			null;
+			nextstate <= state;
 			
 		end case;
 	end process;
