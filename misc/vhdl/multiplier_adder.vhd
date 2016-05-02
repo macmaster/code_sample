@@ -1,9 +1,10 @@
-----------multiplier_adder.vhd---------------------------------
+----------multiplier_adder.vhd------------------------------
 -- Lab 7
 -- Ronny Macmaster
 -- 
 -- Computes the value of the equation:
 -- W  = X * Y + Z
+-- 
 -- W is 5 bits
 -- X is 3 bits
 -- Y is 5 bits
@@ -24,101 +25,49 @@ entity multiplier_adder is
 end multiplier_adder;
 
 architecture control_signals of multiplier_adder is
-	signal state, nextstate : std_logic_vector(0 to 2);
-	signal state_output: std_logic_vector(0 to 2);
+	-- state machine
+	signal state, nextstate: integer range 0 to 9;
 	
-	signal State, Nextstate: integer range 0 to 9;
-	signal ACC: std_logic_vector(8 downto 0); -- accumulator
+	-- register signals
+	signal ACC, W: std_logic_vector(8 downto 0); 
 	alias M: std_logic is ACC(0); -- M is bit 0 of ACC
-	signal addout: std_logic_vector(4 downto 0); -- adder output including carry
-	signal Load, Ad, Sh: std_logic;
+	signal LdW, LdX, LdY, LdZ, Ad, Sh: std_logic;
+	
+	-- arithmetic values
+	signal xval: std_logic_vector(2 downto 0);
+	signal zval: std_logic_vector(4 downto 0);
+	signal addout: std_logic_vector(3 downto 0); -- mult adder output
 	
 begin
-	-- update the state outputs
-	state_output <= state;
-	Q3 <= state_output(2);
-	Q2 <= state_output(1);
-	Q1 <= state_output(0);
+	-- update the arithmetic outputs
+	Result <= ACC(7 downto 0);
+	addout <= ('0' & ACC(7 downto 5)) + ('0' & X(2 downto 0));
 	
-	process(state, x)
-	begin
-		case state is
-		--state 0
-		when "000" =>
-			if(x = '0') then
-				Z <= '0';
-				nextstate <= "001";
-			else
-				Z <= '0';
-				nextstate <= "000";
+	-- clock the registers
+	process(Clock) 
+	begin -- rising edge trigger
+		if Clock'event and Clock = '1' then 
+			if LdW = '1' then -- load ACC result
+				ACC(8 downto 0) <= W(8 downto 0);
 			end if;
-
-		--state 1
-		when "001" =>
-			if(x = '0') then
-				Z <= '0';
-				nextstate <= "000";
-			else
-				Z <= '0';
-				nextstate <= "010";
+			if LdX = '1' then -- load multiplicand
+				xval(2 downto 0) <= X(2 downto 0);
 			end if;
-		
-		--state 2
-		when "010" =>
-			if(x = '0') then
-				Z <= '0';
-				nextstate <= "011";
-			else
-				Z <= '0';
-				nextstate <= "010";
+			if LdY = '1' then -- load multiplier / rst acc
+				ACC(8 downto 5) <= "0000";
+				ACC(4 downto 0) <= Y(4 downto 0); 
 			end if;
-
-		--state 3
-		when "011" =>
-			if(x = '0') then
-				Z <= '0';
-				nextstate <= "011";
-			else
-				Z <= '0';
-				nextstate <= "100";
+			if LdZ = '1' then -- load addend
+				zval(4 downto 0) <= Z(4 downto 0);
 			end if;
-		
-		--state 4
-		when "100" =>
-			if(x = '0') then
-				Z <= '0';
-				nextstate <= "101";
-			else
-				Z <= '0';
-				nextstate <= "010";
+			if Ad = '1' then -- load ACC with mult sum
+				ACC(8 downto 5) <= addout; 
 			end if;
-		
-		--state 5
-		when "101" =>
-			if(x = '0') then
-				Z <= '0';
-				nextstate <= "011";
-			else
-				Z <= '1';
-				nextstate <= "100";
+			if Sh = '1' then -- shift the ACC
+				ACC(8 downto 0) <= '0' & ACC(8 downto 1); 
 			end if;
-		
-		-- default pass
-		when others =>
-			null;
-		
-		end case;
-	end process;
-	
-	-- clock edge or asynch reset
-	process(clk, rst)
-	begin
-		if (rst = '1') then
-			state <= "000";
-		elsif (clk'event and clk = '1') then
 			state <= nextstate;
 		end if;
 	end process;
 	
-end layout;
-
+end control_signals;
