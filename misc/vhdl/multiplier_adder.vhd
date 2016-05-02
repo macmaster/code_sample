@@ -26,7 +26,7 @@ end multiplier_adder;
 
 architecture control_signals of multiplier_adder is
 	-- state machine
-	signal state, nextstate: integer range 0 to 13;
+	signal state, nextstate: integer range 0 to 14;
 	
 	-- register signals
 	signal ACC, W: std_logic_vector(8 downto 0); 
@@ -41,6 +41,7 @@ architecture control_signals of multiplier_adder is
 begin
 	-- update the arithmetic outputs
 	Result <= ACC(7 downto 0);
+	W <= ACC + ("0000" & Z(4 downto 0));
 	addout <= ('0' & ACC(7 downto 5)) + ('0' & X(2 downto 0));
 	
 	-- clock the registers
@@ -96,7 +97,7 @@ begin
 		-- state control
 		case state is
 		when 0 => -- Load X
-			if(St = '1') then
+			if(Start = '1') then
 				LdX <= '1';
 				nextstate <= 1;
 			else
@@ -114,7 +115,7 @@ begin
 		when 3 => -- M Check 1
 			if(M = '1') then
 				Ad <= '1';
-				nexstate <= 4;
+				nextstate <= 4;
 			else
 				Sh <= '1';
 				nextstate <= 5;
@@ -127,7 +128,7 @@ begin
 		when 5 => -- M Check 2
 			if(M = '1') then
 				Ad <= '1';
-				nexstate <= 6;
+				nextstate <= 6;
 			else
 				Sh <= '1';
 				nextstate <= 7;
@@ -140,7 +141,7 @@ begin
 		when 7 => -- M Check 3
 			if(M = '1') then
 				Ad <= '1';
-				nexstate <= 8;
+				nextstate <= 8;
 			else
 				Sh <= '1';
 				nextstate <= 9;
@@ -153,7 +154,7 @@ begin
 		when 9 => -- M Check 4
 			if(M = '1') then
 				Ad <= '1';
-				nexstate <= 10;
+				nextstate <= 10;
 			else
 				Sh <= '1';
 				nextstate <= 11;
@@ -166,7 +167,7 @@ begin
 		when 11 => -- M Check 5
 			if(M = '1') then
 				Ad <= '1';
-				nexstate <= 12;
+				nextstate <= 12;
 			else
 				Sh <= '1';
 				nextstate <= 13;
@@ -175,7 +176,19 @@ begin
 		when 12 => -- M Add 5
 			Sh <= '1';
 			nextstate <= 13;
-
+		
+		when 13 => -- load the W signal
+			LdW <= '1';
+			nextstate <= 14;
+		
+		when 14 => -- output the done signal
+			if(Start = '1') then
+				Done <= '1';
+				nextstate <= 14;
+			else
+				Done <= '1';
+				nextstate <= 0;
+			end if;
 		
 		-- default pass
 		when others =>
