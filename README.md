@@ -17,20 +17,20 @@ Random samples of my side / school code
 
 3) **C**  
 * EE 319K Music player code for TM4C123 Microcontroller  
-* Hexmsg - a string msg to hexadecimal converter (command line)  
+* _Hexmsg_ - a string msg to hexadecimal converter (command line)  
 
 4) **Java**  
-* TextEditor - A text editor with auto correct and a markov word generator  
-* MapGraphs - Search visualization of route planning software  
+* _TextEditor_ - A text editor with auto correct and a markov word generator  
+* _MapGraphs_ - Search visualization of route planning software  
   (Similar to Google Maps Directions planner)    
-* UnfoldingMaps - Geodata visualization (population and earthquakes)  
-* Max Continuous Subset Sum - O(n^3), O(n^2) and O(n) solution  
+* _UnfoldingMaps_ - Geodata visualization (population and earthquakes)  
+* _Max Continuous Subset Sum_ - O(n^3), O(n^2) and O(n) solution  
 
 5) **Javascript**  
-* Matching Smilies - Memory-based web game  
+* _Matching Smilies_ - Memory-based web game  
 
 6) **Python**  
-    
+
 
 7) **misc**  
 
