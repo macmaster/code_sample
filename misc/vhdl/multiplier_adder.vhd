@@ -44,8 +44,15 @@ begin
 	addout <= ('0' & ACC(7 downto 5)) + ('0' & X(2 downto 0));
 	
 	-- clock the registers
-	process(Clock) 
-	begin -- rising edge trigger
+	process(Clock, Reset) 
+	begin 
+		-- asynchronous reset
+		if Reset = '1' then
+			state <= 0;
+			ACC(8 downto 0) <= "000000000";
+		end if;
+		
+		-- rising edge trigger
 		if Clock'event and Clock = '1' then 
 			if LdW = '1' then -- load ACC result
 				ACC(8 downto 0) <= W(8 downto 0);
@@ -69,5 +76,17 @@ begin
 			state <= nextstate;
 		end if;
 	end process;
+	
+	-- state machine
+	process(state, Start, M)
+	begin
+		-- reinit control variables
+		Done <= '0';
+		LdW <= '0'; LdX <= '0';	
+		LdY <= '0'; LdZ <= '0';
+		Ad <= '0'; Sh <= '0'; 
+
+	end process;
+	
 	
 end control_signals;
