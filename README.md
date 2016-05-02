@@ -30,7 +30,8 @@ Random samples of my side / school code
 * _Matching Smilies_ - Memory-based web game  
 
 6) **Python**  
-
+* _Stock Scraper_ - basic stock scraper work in python  
+* py_scratch_work - Data structs, regular expressions, SQLite, urls, and webservices   
 
 7) **misc**  
-
+* Really hacky stuff lol
