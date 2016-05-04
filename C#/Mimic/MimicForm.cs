@@ -16,7 +16,14 @@ namespace Mimic
 {
     public partial class MimicForm : ExtensionForm
     {
-        private bool mimicFlag = false;
+		// chat packet headers
+		public const int SAY_IN = 1445;
+		public const int SAY_OUT = 1403;
+		public const int SHOUT_IN = 0;
+		public const int SHOUT_OUT = 0;
+
+
+		private bool mimicFlag = false;
         private int copyID;
 
         public MimicForm()
@@ -26,7 +33,7 @@ namespace Mimic
 
             // set triggers
             Triggers.InAttach(828, OnChatIncoming);
-            Triggers.InAttach(3881, OnChatIncoming);
+            Triggers.InAttach(1445, OnChatIncoming);
             InitializeComponent();
         }
 
@@ -52,7 +59,7 @@ namespace Mimic
                     string char_string = Encoding.UTF8.GetString(strlist.ToArray());
 
                     // print msg string
-                    Connection.SendToServerAsync(1143, char_string, 4, 0);
+                    Connection.SendToServerAsync(1403, char_string, 4, 0);
                 }
             }
         }
@@ -80,7 +87,7 @@ namespace Mimic
                     string char_string = Encoding.UTF8.GetString(strlist.ToArray());
 
                     // print msg string
-                    Connection.SendToServerAsync(1469, char_string, 4, 0);
+                    Connection.SendToServerAsync(1403, char_string, 4, 0);
                 }
             }
         }
