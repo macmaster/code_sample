@@ -19,12 +19,12 @@ namespace Mimic
 		// chat packet headers
 		public const int SAY_IN = 1445;
 		public const int SAY_OUT = 1403;
-		public const int SHOUT_IN = 0;
-		public const int SHOUT_OUT = 0;
+		public const int SHOUT_IN = 3300;
+		public const int SHOUT_OUT = 2365;
 
 
 		private bool mimicFlag = false;
-        private int copyID;
+		private int copyID;
 
         public MimicForm()
         {
@@ -32,8 +32,8 @@ namespace Mimic
             copyID = 0;
 
             // set triggers
-            Triggers.InAttach(828, OnChatIncoming);
-            Triggers.InAttach(1445, OnChatIncoming);
+            Triggers.InAttach(SHOUT_IN, OnShoutIncoming);
+            Triggers.InAttach(SAY_IN, OnChatIncoming);
             InitializeComponent();
         }
 
@@ -59,7 +59,7 @@ namespace Mimic
                     string char_string = Encoding.UTF8.GetString(strlist.ToArray());
 
                     // print msg string
-                    Connection.SendToServerAsync(1403, char_string, 4, 0);
+                    Connection.SendToServerAsync(SAY_OUT, char_string, 0, 0);
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace Mimic
                     string char_string = Encoding.UTF8.GetString(strlist.ToArray());
 
                     // print msg string
-                    Connection.SendToServerAsync(1403, char_string, 4, 0);
+                    Connection.SendToServerAsync(SHOUT_OUT, char_string, 0);
                 }
             }
         }

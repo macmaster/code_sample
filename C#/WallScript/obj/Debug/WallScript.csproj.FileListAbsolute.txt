@@ -1,0 +1,11 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Debug\WallScript.dll.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Debug\WallScript.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Debug\WallScript.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Debug\Sulakore.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Debug\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Debug\WallScript.csprojResolveAssemblyReference.cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Debug\WallScript.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Debug\WallScript.WallForm.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Debug\WallScript.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Debug\WallScript.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Debug\WallScript.pdb
