@@ -14,6 +14,12 @@ print 'x - y = ', $x - $y, "\n";
 print 'x * y = ', $x * $y, "\n";
 print 'x / y = ', $x / $y, "\n";
 
+$x = "ronny", $y = "macmaster";
+$msg = $x." ".$y."\n";
+print "\n", "String Scalars:\n";
+print "x = $x y = $y \n";
+print "x . y = $msg\n";
+
 # Arrays
 # you can go backwards, but it returns null past the boundary.
 
@@ -21,7 +27,20 @@ print 'x / y = ', $x / $y, "\n";
 print "\n\n", "Arrays:\n";
 print "$arr[0], $arr[1], $arr[2], $arr[3], $arr[4], $arr[5]\n";
 print "$arr[-1], $arr[-2], $arr[-3], $arr[-4], $arr[-5], $arr[-6]\n";
-print "$arr[6] = $arr[-7]", "\n"; 
+print "$arr[6] = $arr[-7]", "\n";
+
+@arr = qw/Mon Tues Wed Thurs Fri/;
+print "String Tokenizers:\n";
+print $arr[0], " ";
+print $arr[1], " ";
+print $arr[2], " ";
+print $arr[3], " ";
+print $arr[4], " ";
+
+@arr = (A..Z);
+print "@arr\n";
+print scalar @arr;
+
 
 # Hashes
 
