@@ -16,7 +16,11 @@ namespace FFBot
 {
     public partial class Form1 : ExtensionForm
     {
-        private bool runFlag = false;
+		protected const int SPACE_SEL = 2570;
+		protected const int FURNI_MOVE = 3267;
+		protected const int FURNI_PUT = 551;
+
+		private bool runFlag = false;
         private bool chooseFlag = false;
 
         private Tuple<int, int> space = new Tuple<int, int>(0, 0);
@@ -24,9 +28,9 @@ namespace FFBot
         public Form1()
         {
             // attach 
-            Triggers.OutAttach(2388, OnSpaceSelected); // walk packet
-            Triggers.InAttach(1790, OnFurniPlaced); // move packet
-            Triggers.InAttach(670, OnFurniPlaced); // placed packet
+            Triggers.OutAttach(SPACE_SEL, OnSpaceSelected); // walk packet
+            Triggers.InAttach(FURNI_MOVE, OnFurniPlaced); // move packet
+            Triggers.InAttach(FURNI_PUT, OnFurniPlaced); // placed packet
             InitializeComponent();
         }
 
@@ -82,10 +86,10 @@ namespace FFBot
                 Tuple<int, int> furni_space = new Tuple<int, int>(data[17], data[21]);
 
                 // move to that space
-                if (space.Equals(furni_space))
-                {
-                    Connection.SendToServerAsync(2388, space.Item1, space.Item2);
-                }
+                //if (space.Equals(furni_space))
+                //{
+                    Connection.SendToServerAsync(SPACE_SEL, furni_space.Item1, furni_space.Item2);
+                //}
 
                 // debug print space
                 //string space_string = "(" + furni_space.Item1 + ", " + furni_space.Item2 + ")";

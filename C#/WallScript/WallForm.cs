@@ -48,6 +48,7 @@ namespace WallScript {
 			windowID += (data[7] << 16);
 			windowID += (data[6] << 24);
 
+			Connection.SendToServerAsync(SAY_OUT, (windowID / 10000).ToString(), 0, 0);
 		}
 
 		private void faceLeft_Click(object sender, EventArgs e) {
@@ -70,11 +71,11 @@ namespace WallScript {
 			move_string += "l=" + l_x + "," + l_y + " " + windowFace;
 
 			// packet length
-			int length = 2 + 4 + 2 + move_string.Length;
+			int length = 2 + 4 + 2 + 4 + move_string.Length;
 			byte[] packet = new byte[length];
 
 			// packet length and header
-			packet[0] = packet[1] = packet[2] = 0; packet[3] = (byte)length;
+			packet[0] = packet[1] = packet[2] = 0; packet[3] = (byte)(length - 4);
 			packet[4] = (MOVE_WINDOW >> 8); packet[5] = (MOVE_WINDOW & 0xFF);
 
 			// encode window ID
@@ -91,8 +92,12 @@ namespace WallScript {
 			}
 
 			// debug print packet
+			foreach(Byte b in packet) {
+                Console.Write(b.ToString() + " ");
+			} Console.Write("\n" + windowID + "\n");
+
+			// test packet send by byte arr
 			Connection.SendToServerAsync(packet);
-			//Connection.SendToServerAsync(SAY_OUT, packet.ToString(), 0, 0);
 		}
 
 	}

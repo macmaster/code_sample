@@ -1,0 +1,11 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\bin\Debug\CirclePerson.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\bin\Debug\Sulakore.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\bin\Debug\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\obj\Debug\CirclePerson.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\obj\Debug\CirclePerson.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\obj\Debug\CirclePerson.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\bin\Debug\CirclePerson.exe.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\bin\Debug\CirclePerson.exe
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\obj\Debug\CirclePerson.exe
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WindowsFormsApplication1\obj\Debug\CirclePerson.csprojResolveAssemblyReference.cache

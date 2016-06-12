@@ -1,0 +1,10 @@
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Release\WallScript.exe.config
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Release\WallScript.exe
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Release\WallScript.pdb
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Release\Sulakore.dll
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\bin\Release\Sulakore.xml
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Release\WallScript.Properties.Resources.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Release\WallScript.WallForm.resources
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Release\WallScript.csproj.GenerateResource.Cache
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Release\WallScript.exe
+C:\Users\ronald\Documents\GitHub\code_sample\C#\WallScript\obj\Release\WallScript.pdb
