@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
 			break;
 		  
 		  default:
-			cout << "%" << hex << (int)url[i];
+			cout << "\%" << hex << (int)url[i];
 		}
 	}
 
