@@ -46,5 +46,4 @@ while(($line = fgets($fhand)) != null) {
 }
 fclose($fhand);
 fclose($log);
-
 ?>
