@@ -12,11 +12,16 @@
 
 using namespace std;
 
-int main(){
+int main(int argc, char *argv[]){
 	
 	// prompt
 	string url;
-	cout << "Enter your url: "; cin >> url;
+	if(argc > 1){
+		url = string(argv[1]);
+	}
+	else{
+		cout << "Enter your url: "; cin >> url;
+	}
 
 	//print
 	int n = url.length();

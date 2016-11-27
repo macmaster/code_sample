@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>VisualBoyAdvance for Hackers</title>
+    <style>
+    <!--
+    
+    #wrapper { border: 1px solid rgb(194, 207, 233); margin: 20px
+    auto; padding: 10px; width: 80% }
+    #title { font-family: Verdana, Lucida, Arial, Helvetica;
+    font-size: 3em; font-weight: bold } 
+    div.syntax {border: 1px solid rgb(40, 40, 40); padding: 5px;
+    margin-bottom: 8px;}
+    .syntax pre, pre { border: 1px solid rgb(200, 200, 200); padding:
+    5px; } 
+    
+    .syntax strong { font-size: 0.9em; margin: 0; }
+    body { font-size: 1em; }
+    h2 { margin-top: 1.5em; }
+    h3.syntax { color: red; margin-top: 1.2em;}
+    a:visited { color: blue; }
+    .mono {font-family: Courier; font-size: 0.9em;}
+    #download strong { color: red }
+    
+    -->
+    </style>
+</head>
+
+<body>
+<div id="wrapper">
+<div id="title">VBA-SDL-H r070904a</div>
+<h4>VisualBoyAdvance for Hackers</h4>
+<div id="website"> <a href="http://labmaster.bios.net.nz/vba-sdl-h/">
+  http://labmaster.bios.net.nz/vba-sdl-h/</a> 
+  - this file last updated Tue 04 Sep 2007 22:41:21 NZST </div> 
+<div id="download"><strong>Download:</strong> <a href="http://sharesource.org/project/vbasdlh/">ShareSource</a>, 
+</div>
+
+<h2>Table of Contents</h2>
+<ul>
+  <li><a href="#introduction">1. Introduction</a></li>
+  <li><a href="#changelog">2. Changelog</a></li>
+  <li><a href="#usage">3. Usage</a></li>
+  <li><a href="#commands">4. Command Reference</a></li>
+  <li><a href="#contrib">5. Contributors</a></li>
+  <li><a href="#license">6. License</a></li>
+</ul>
+
+<h2 id="introduction">1. Introduction</h2>
+<p>VBA-SDL-H is a modified version of the Gameboy Advance emulator
+  VisualBoyAdvance which includes enhanced debugging facilities.</p> 
+
+<p>This release of VBA-SDL-H is a complete rewrite based on the
+  official VBA 1.7.2 codebase. Most significantly, expression
+  evaluation has been added, robust code tracing functionality is
+  available and the memory access breakpoint system has undergone a
+  major overhaul.</p> 
+
+<h3>Contacting me</h3>
+<p>If you need to contact me, you can do so via ROMHacking.net. If
+  you need support, have a bug report or feature request, you can post
+y  in <a href="http://www.romhacking.net/forum/index.php/topic,4521.0.html">this</a> thread.</p>
+
+<h3>Development</h3>
+<p>This software is open source and licensed under the GPL. If you
+  want to make any additions or alterations, you can make a feature
+  request, or just do it yourself. I'm maintaining
+  a <a href="http://www.selenic.com/mercurial/wiki/">Mercurial</a>
+  repository
+  at <a href="http://sharesource.org/project/vbasdlh/">ShareSource</a>
+  for those of you who want to grab the latest code.</p>
+
+<h2 id="changelog">2. Changelog</h2>
+<strong>r070904a</strong>
+<ul>
+  <li>Fixed bug in rta and rtt</li>
+  <li>Fixed bug in application of ARM breakpoints</li>
+</ul>
+<strong>r070904 - Changes from 1.7.2 (official)</strong>
+<ul>
+  <li>Added tracing support</li>
+  <li>Extended breakpoint support (read/write on almost all addresses)</li>
+  <li>Expression evaluation added to most commands with user-defined
+  variables</li> 
+  <li>Search functions (by DevZ)</li>
+  <li>Load and save raw data dumps</li>
+  <li>Load and save savestates from console</li>
+  <li><strong>New commands:</strong> <span class="mono">bpr, bprc, db,
+  dbc, dload, dsave,  dn, er, eval, ft, fh, fr, load, save, rt, rta, rtt, trace,
+  var</span></li>
+  <li><strong>Modified commands:</strong><span class="mono"> d, da,
+  dt, eb, eh, ew, mb,  mh, mw</span></li>
+  <li><strong>Renamed commands:</strong><span class="mono"> sbreak,
+  sradix, sprint, ssymbols, strace</span></li>
+
+</ul>
+
+<h2 id="usage">3. Usage</h2>
+<p>VBA-SDL-H, like VBA-SDL, is a command-line program. You can start
+  the program from the command prompt ('$' is the prompt) e.g.:</p>
+<pre>
+  $ VisualBoyAdvance-SDL-H.exe name_of_rom.gba
+</pre>
+<p>Or (in Windows) drag the ROM onto the executable file in explorer,
+  or right-click the ROM, select 'Open with', and select the
+  executable.</p>
+<p>VBA-SDL-H is designed to be used in conjunction with 'normal' VBA,
+  so it is advised that you set the programs up so that they share the
+  same configuration file, or have their configurations pointing to
+  the same ROM, save directories, etc.</p>
+
+<h3>Compiling from source</h3>
+<p>VBA-SDL-H can be compiled from source in the same way as VBA. See
+  COMPILING for detailed instructions. For Windows users, a Solution
+  file for Visual C++ Express (free download from MSDN) has been
+  included. For Linux users, you'll need the standard tools. The only
+  extra dependency for Linux not listed in the documenation is GNU
+  readline, which is optional, but highly recommended.</p>
+
+<h3>Accessing the debugging console</h3>
+<p>All of the useful stuff in VBA-SDL-H is done via the
+  debugging-console. This can be accessed by pressing 'F11' whilst the
+  game is running. This stops the execution of the ROM. In the console
+  window you will now see
+  the <span class="mono">debugger&gt;</span> prompt. This is where you
+  type in commands.</p>
+<pre>
+R00=0000001a R04=00000001 R08=00000000 R12=00000000
+R01=00000007 R05=030000a4 R09=00000000 R13=03007ee0
+R02=80000000 R06=00000f55 R10=00000000 R14=020002db
+R03=00000080 R07=00000000 R11=00000000 R15=02000244
+CPSR=4000007f (.Z...FT Mode: 1f)
+02000240  d107 bne $02000252 <strong>(last executed instruction)</strong>
+> 02000242  2200 mov r2, #0x0 <strong>(current instruction - will be executed next)</strong>
+02000244  4288 cmp r0, r1 <strong>(instruction following the current one - will not necessarily be executed if the current instruction is a branch)</strong>
+debugger>
+</pre>  
+
+<p>To return to the game, you use the
+  command <span class="mono">c</span>. To quit, you can press ESC
+  whilst the game is running, or use the <span class="mono">q</span>
+  command from the console.</p>
+
+<h2 id="commands">4. Command Reference</h2>
+<p>This section lists the commands available at the debugging
+  console. Although limited help is provided within the program (use
+  the command <span class="mono">h</span>), this may not be very
+  detailed (especially for commands that have sub-commands, like 'var'
+  and 'trace').</p>
+
+<p>Additionally, commands prefixed with an 's' (<span class="mono">
+    slocals, sbreak, sradix, sprint, ssymbols, strace</span> and
+    <span class="mono">swhere</span> are symbolic debugging commands,
+    and are only useful for use with ROMs that have symbolic debugging
+    information included.</p>
+
+<p>Arguments listed in [brackets] are optional. Arguments listed in
+  {braces} take expressions (described below) </p>
+
+<ul>
+  <li><a href="#cmdExpression">4.1 Expression Syntax</a></li>
+  <li><a href="#cmdExBreak">4.2 Execution Breakpoints</a></li>
+  <li><a href="#cmdExecution">4.3 Execution Control</a></li>
+  <li><a href="#cmdVar">4.4 Expressions and Variables</a></li>
+  <li><a href="#cmdMemBreak">4.5 Memory Breakpoints</a></li>
+  <li><a href="#cmdMemEdit">4.6 Memory/Register Editing</a></li>
+  <li><a href="#cmdMemView">4.7 Memory/Register Viewing</a></li>
+  <li><a href="#cmdMiscellaneous">4.8 Miscellaneous</a></li>
+  <li><a href="#cmdDumps">4.9 Raw Data Dumps</a></li>
+  <li><a href="#cmdSearch">4.10 Searching</a></li>
+  <li><a href="#cmdTrace">4.11 Tracing</a></li>
+</ul>
+
+<h3 id="cmdExpression">4.1 Expression Syntax</h3>
+<p>Expressions can be used as arguments to commands to reduce
+  typing. However, when used as an argument, they cannot contain
+  whitespace unless surrounded by quotation marks.</p>
+<h4>Literals</h4>
+<p>Numbers prefixed with a '$', '0x', or have a leading zero, are
+  interpreted as <strong>hexadecimal</strong>.</p>
+<p>Numbers without a leading zero are interpreted
+  as <strong>decimal</strong>.</p>
+<pre>
+debugger> eval  $AB
+ =$000000AB
+debugger> eval 0xABC
+ =$00000ABC
+debugger> eval 0ABCD
+ =$0000ABCD
+debugger> eval 099
+ =$00000099
+debugger> eval 99
+ =$00000063
+</pre>
+
+<h4>Registers</h4>
+<p>The values contained in registers can be substituted in by using
+  the special variables 'r0', 'r1', etc... as well as 'sp', 'lr' and
+  'pc' for r13, r14 and r15.</p>
+<pre>
+R00=00000004 R04=00000003 R08=00000000 R12=00000000
+R01=00000004 R05=00030000 R09=00000000 R13=03007bc8
+R02=00000048 R06=03001d50 R10=00000000 R14=080188bf
+R03=03001d98 R07=03001d58 R11=00000000 R15=08018906
+CPSR=8000003f (......T Mode: 1f)
+> 08018904  2809 cmp r0, #0x9
+debugger> eval r3
+ =$03001D98
+debugger> eval r06
+ =$03001D50
+debugger> eval sp
+ =$03007BC8
+</pre>
+
+<h4>User defined variables</h4>
+<p>User defined variables can be created with
+  the <span class="mono">var set</span> command. Once defined they can
+  be used in expressions like a normal literal. Variables can also be
+  loaded from/saved to a file using <span class="mono">var
+  load</span> and <span class="mono">var save</span>.</p>
+<pre>
+debugger> var set foo 42
+foo = $0000002a
+debugger> eval foo
+ =$0000002A
+</pre>
+
+<h4>Addressing Memory</h4>
+<p>Values from memory locations can be accessed using
+  brackets. 'b[expr]' will be replaced by the evaluator with the byte
+  at the address represented by expr. Likewise, 'h[expr]' and
+  'w[expr]' are replaced by the halfword, and word at expr
+  respectively. expr can be any expression - nesting of addressing
+  operations is also allowed.</p>
+<pre>
+debugger> mb 080000a0
+080000a0 41 44 56 41 4e 43 45 57 41 52 53 50 41 57 52 50 ADVANCEWARSPAWRP
+080000b0 30 31 96 00 00 00 00 00 00 00 00 00 00 37 00 00 01...........7..
+...
+debugger> eval b[080000a0]
+ =$00000041
+debugger> eval h[080000a0]
+ =$00004441
+debugger> eval w[080000a0]
+ =$41564441
+</pre>
+
+<h4>Math operations</h4>
+<p>All standard math operators are support, with their usual
+  precedence. They are (from highest to lowest):</p>
+<table>
+  <tr><td><strong>()</strong></td><td>grouping</td></tr>
+  <tr><td><strong>* /</strong></td><td>multiplication/division</td><tr>
+  <tr><td><strong>+ -</strong></td><td>addition/subtraction</td><tr>
+  <tr><td><strong>&lt;&lt; &gt;&gt;</strong></td><td>bitwise shift</td><tr>
+  <tr><td><strong>&amp;</strong></td><td>bitwise AND</td><tr>
+  <tr><td><strong>^</strong></td><td>bitwise XOR</td><tr>
+  <tr><td><strong>|</strong></td><td>bitwise OR</td><tr>
+</table>
+<pre>
+debugger> eval b[080000a0]*2-1
+ =$00000081
+debugger> eval $42>>1+1
+ =$00000022
+debugger> eval $42>>(1+1)
+ =$00000010
+debugger> eval $42>>(1|2)
+debugger> eval ((($42<<8)*3-0321fe)/3)^0x5ef94cde
+ =$0BADC0DE
+</pre>
+
+<h3 id="cmdExBreak">4.2 Execution Breakpoints</h3>
+<div class="syntax">
+<pre>ba {address}</pre>
+<p>Adds an ARM breakpoint on the instruction at {address}</p>
+</div>
+<div class="syntax">
+<pre>bt {address}</pre>
+<p>Adds a Thumb breakpoint on the instruction at {address}.</p>
+</div>
+<div class="syntax">
+<pre>bl</pre>
+<p>Lists all execution breakpoints</p>
+</div>
+<div class="syntax">
+<pre>bd &lt;n&gt;</pre>
+<p>Delete breakpoint &lt;n&gt;</p>
+</div>
+
+<h3 id="cmdExecution">4.3 Execution control</h3>
+<div class="syntax">
+<pre>c</pre>
+<p>Continues execution of the ROM (disables debugging console)</p>
+</div>
+<div class="syntax">
+<pre>n</pre>
+<p>Execute the next instruction.</p>
+</div>
+<div class="syntax">
+<pre>rtt {address}</pre>
+<p>Execute until the Thumb instruction at {address}</p>
+</div>
+<div class="syntax">
+<pre>rta {address}</pre>
+<p>Execute until the ARM instruction at {address}</p>
+</div>
+<div class="syntax">
+<pre>rt {address}</pre>
+<p>Execute until the instruction at {address} (assumes current mode)</p>
+</div>
+
+<h3 id="cmdVar">4.4 Expressions and Variables</h3>
+<div class="syntax">
+<pre>var set &lt;name&gt; {value}</pre>
+<p>Defines a variable &lt;name&gt; equal to {value}</p>
+</div>
+<div class="syntax">
+<pre>var list</pre>
+<p>Lists all currently defined variables</p>
+</div>
+<div class="syntax">
+<pre>var load &lt;file&gt;</pre>
+<p>Load variables from &lt;file&gt;</p>
+</div>
+<div class="syntax">
+<pre>var save &lt;file&gt;</pre>
+<p>Saves variables to &lt;file&gt;</p>
+</div>
+<div class="syntax">
+<pre>eval {expr}</pre>
+<p>Prints the value of {expr}.</p>
+</div>
+
+<h3 id="cmdMemBreak">4.5 Memory Breakpoints</h3>
+<div class="syntax">
+<pre>bpr {address} {count}</pre>
+<p>Adds a read breakpoint on {count} bytes starting at {address}</p>
+</div>
+<div class="syntax">
+<pre>bprc</pre>
+<p>Clear all read breakpoints</p>
+</div>
+<div class="syntax">
+<pre>bpw {address} {count}</pre>
+<p>Adds a write breakpoint on {count} bytes starting at {address}</p>
+</div>
+<div class="syntax">
+<pre>bpwc</pre>
+<p>Clear all write breakpoints</p>
+</div>
+
+<h3 id="cmdMemEdit">4.6 Memory/Register Editing</h3>
+<div class="syntax">
+<pre>eb {address} {value}</pre>
+<p>Change the byte at {address} to {value}</p>
+</div>
+<div class="syntax">
+<pre>eh {address} {value}</pre>
+<p>Change the halfword at {address} to {value}</p>
+</div>
+<div class="syntax">
+<pre>ew {address} {value}</pre>
+<p>Change the word at {address} to {value}</p>
+</div>
+<div class="syntax">
+<pre>er &lt;n&gt; {value}</pre>
+<p>Change the contents of register &lt;n&gt; to {value}</p>
+</div>
+
+<h3 id="cmdMemView">4.7 Memory/Register Viewing</h3>
+<div class="syntax">
+<pre>mb {address}</pre>
+<p>Show memory contents at {address} as bytes</p>
+</div>
+<div class="syntax">
+<pre>mh {address}</pre>
+<p>Show memory contents at {address} as halfwords (16-bit)</p>
+</div>
+<div class="syntax">
+<pre>mw {address}</pre>
+<p>Show memory contents at {address} as words (32-bit)</p>
+</div>
+<div class="syntax">
+<pre>io</pre>
+<p>Shows the status of some I/O registers</p>
+</div>
+<div class="syntax">
+<pre>r</pre>
+<p>Shows contents of processor registers</p>
+</div>
+
+<h3 id="cmdMiscellaneous">4.8 Miscellaneous</h3>
+<div class="syntax">
+<pre>q</pre>
+<p>Quits the program.</p>
+</div>
+<div class="syntax">
+<pre>load &lt;n&gt;</pre>
+<p>Loads savestate &lt;n&gt;</p>
+</div>
+<div class="syntax">
+<pre>save &lt;n&gt;</pre>
+<p>Saves to savestate &lt;n&gt;</p>
+</div>
+
+<h3 id="cmdDumps">4.9 Raw Data Dumps</h3>
+<div class="syntax">
+<pre>dload &lt;file&gt; {address}</pre>
+<p>Load raw data dump from &lt;file&gt; into {address}</p>
+</div>
+<div class="syntax">
+<pre>dsave &lt;file&gt; {address} {size}</pre>
+<p>Save {size} bytes of data at {address} to &lt;file&gt;</p>
+</div>
+
+<h3 id="cmdSearch">4.10 Searching</h3>
+<div class="syntax">
+<pre>fh {start} [&lt;max-result&gt;] &lt;hex-string&gt;</pre>
+<p>Search memory for hex-string</p>
+</div>
+<div class="syntax">
+<pre>ft {start} [&lt;max-result&gt;] &lt;string&gt;</pre>
+<p>Search memory for ASCII-string</p>
+</div>
+<div class="syntax">
+<pre>fr [&lt;max-result&gt;]</pre>
+<p>Resume current search</p>
+</div>
+
+<h3 id="cmdTrace">4.11 Tracing</h3>
+<div class="syntax">
+<pre>trace file &lt;file&gt;</pre>
+<p>Set tracer output to &lt;file&gt; (default is trace.log)</p>
+</div>
+<div class="syntax">
+<pre>trace start</pre>
+<p>Start trace</p>
+</div>
+<div class="syntax">
+<pre>trace stop</pre>
+<p>Stop trace</p>
+</div>
+<div class="syntax">
+<pre>trace once on|off</pre>
+<p>When enabled, instructions are only logged to the output file the
+  first time they are executed.</p>
+</div>
+
+
+<h2 id="contrib">5. Contributors</h2>
+<p>A lot of people have contributed over the years to make VBA what it
+  is today. Without their efforst, VBA-SDL-H would not exist.</p>
+<ul>
+  <li>Forgotten and the VBA team  - created the original VBA</li>
+  <li>kenobi - extended VBA to create the first VBA-H</li>
+  <li>DevZ - search function patch</li>
+  <li>richq - various patches</li>
+</ul>
+
+<h2 id="license">6. License</h2>
+<p>VBA-SDL-H, like VBA, is licensed under the GPL (v2). See COPYING
+  for the full text.</p>

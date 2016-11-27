@@ -18,6 +18,10 @@ namespace TanjiExtension1
 {
     public partial class Form1 : ExtensionForm
     {
+		// data headers
+		protected const int DANCE = 2628;
+		protected const int SAY_OUT = 1403;
+
 		private int dance = 1;
         private int msg_idx = 0;
         private bool mimicFlag = false;
@@ -34,10 +38,10 @@ namespace TanjiExtension1
         {
             // send a wave and msg packet
             string msg = "Get rekt bro!!!";
-            Connection.SendToServerAsync(2198, 1); // dance
+            Connection.SendToServerAsync(DANCE, 1); // dance
             for (int i = 0; i < 20; i++)
             {
-                Connection.SendToServerAsync(1143, msg, 4, 0);
+                Connection.SendToServerAsync(SAY_OUT, msg, 4, 0);
                 System.Threading.Thread.Sleep(750);
             }
         }
@@ -46,12 +50,12 @@ namespace TanjiExtension1
         {
             for (int i = 0; i < 400; i++)
             {
-                Connection.SendToServerAsync(2198, dance * (i % 2)); // dance
+                Connection.SendToServerAsync(DANCE, dance * (i % 2)); // dance
                 System.Threading.Thread.Sleep(50);
             }
-            Connection.SendToServerAsync(2198, dance); // dance
+            Connection.SendToServerAsync(DANCE, dance); // dance
             System.Threading.Thread.Sleep(50);
-            Connection.SendToServerAsync(2198, dance); // dance
+            Connection.SendToServerAsync(DANCE, dance); // dance
 
         }
 
@@ -117,7 +121,7 @@ namespace TanjiExtension1
                 string char_string = Encoding.UTF8.GetString(strlist.ToArray());
 
                 // print msg string
-                Connection.SendToServerAsync(1143, char_string, 4, msg_idx);
+                Connection.SendToServerAsync(SAY_OUT, char_string, 4, msg_idx);
             }
 
         }
@@ -125,7 +129,7 @@ namespace TanjiExtension1
 		protected void numericUpDown2_ValueChanged(object sender, EventArgs e) {
 			dance = (int)numericUpDown2.Value;
             string char_string = dance.ToString();
-			//Connection.SendToServerAsync(1143, char_string, 4, msg_idx);
+			//Connection.SendToServerAsync(SAY_OUT, char_string, 4, msg_idx);
 		}
 	}
 }
