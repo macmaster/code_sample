@@ -1,0 +1,7 @@
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\bin\Release\PictureViewer.exe
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\bin\Release\PictureViewer.pdb
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\obj\Release\PictureViewer.PictureViewer.resources
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\obj\Release\PictureViewer.Properties.Resources.resources
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\obj\Release\PictureViewer.csproj.GenerateResource.Cache
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\obj\Release\PictureViewer.exe
+c:\users\ronny\documents\visual studio 2017\Projects\PictureViewer\PictureViewer\obj\Release\PictureViewer.pdb
