@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#set delay and count
+ddelay=0.2; dcount=100;
+delay=$1; count=$2;
+if [ -x $delay ]; then
+	delay=$ddelay; # default delay
+	if [ -x $count ]; then
+		count=$dcount; # default count
+	fi
+fi
+
+#mouse location
+loc=`xdotool getmouselocation`
+echo $loc
+
+# auto click loop
+key=""; 
+for((idx=0;idx<=$count;idx++)) do
+	xdotool click 1
+	echo $idx
+	sleep $delay
+done
+

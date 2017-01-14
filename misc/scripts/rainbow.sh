@@ -33,7 +33,7 @@ c=`expr $c + 1`
 if [ $c -eq 5 ]
 then
   c=0;
- sleep 0.06s
+ sleep 0.05s
 fi
 
 done
