@@ -76,8 +76,33 @@ puts msg
 # end
 # puts ""
 
-string = "This is a really long string with a few misnomers and what not brother...."
-puts "original: #{string}"
-puts "substituted: #{string.gsub(/[aeiou]/, 'x')}"
+# string = "This is a really long string with a few misnomers and what not brother...."
+# puts "original: #{string}"
+# puts "substituted: #{string.gsub(/[aeiou]/, 'x')}"
+# 
+# call_block { puts "wow.wow.wow!" }
+# 
+# require_relative 'book'
+# book = Book.new("201341", 6.00)
+# book.price = 22.00
+# puts book.stat
+# book.err
+# 
+# require_relative 'account'
+# account = Account.new(65000)
+# puts account.compare_to(nil)
+# puts account.compare_to(Account.new(65001))
+# 
+# puts SpecialAccount.new(23000).name(1, 2, 3, "sdfljk")
+# 
+# def varargs(*args)
+# 	puts args.inspect
+# end
+# 
+# varargs(1, 2, 3, {cold: "turkey", "bacon": 23.0, :nope => nil})
+# varargs
+# varargs("sizy")
+# 
+# nys_tax = Tax.new("New York State Tax") { |amount| amount *= 0.085; amount + Math::PI - Math.acos(0); }
+# puts nys_tax.get_tax?(50000)
 
-call_block { puts "wow.wow.wow!" }
