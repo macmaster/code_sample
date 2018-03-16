@@ -8,7 +8,7 @@
 $to = 'RonnyMacmaster@gmail.com';
 $from = 'ronny@linux.com';
 $subject = 'Perl Email';
-$message << 'EOF';
+$message = << 'EOF';
 Hey Ronny, Just testing out perl's email utility.
 I hope everthing is going well.
 How are the wife and kids?
@@ -25,5 +25,5 @@ print MAIL "From: $from\n";
 print MAIL "Subject: $subject\n";
 print MAIL $message;
 
-close(MAIL;
-print "Sent the e-mail to: $to";
+close(MAIL);
+print "Sent the e-mail to: $to\n";
