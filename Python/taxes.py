@@ -9,6 +9,8 @@ parser.add_argument("-s", "--state", dest="state", type=str, default="",
     help="2-letter state code for tax purposes")
 parser.add_argument("-c", "--city", dest="city", type=str, default="",
     help="city code for tax purposes")
+parser.add_argument("-r", dest="retirement", type=float, default=0.0,
+    help="401k contribution")
 parser.add_argument("--no-fica", dest="fica", action="store_false", default=True, 
     help="exclude the fica taxes")
 parser.add_argument("--old", dest="old", action="store_true", default=False, 
@@ -96,13 +98,14 @@ city_taxes = {
 
 # taxes applied
 tax_list = []
+taxable_income = args.income - args.retirement
 
 # city gov
 city_tax = None
 city_code = str.lower(args.city)
 if city_code in city_taxes.keys():
     city_tax = city_taxes[city_code]
-    city_tax.value = city_tax.calc(args.income)
+    city_tax.value = city_tax.calc(taxable_income)
     tax_list.extend([city_tax])
 
 # state gov 
@@ -110,7 +113,7 @@ state_tax = None
 state_code = str.lower(args.state)
 if state_code in state_taxes.keys():
     state_tax = state_taxes[state_code]
-    state_tax.value = state_tax.calc(args.income)
+    state_tax.value = state_tax.calc(taxable_income)
     tax_list.extend([state_tax])
 
 # take the state and local tax deduction
@@ -122,10 +125,10 @@ old_federal_tax.deduction = max(standard_deduction, salt_deduction)
 
 # federal gov
 if not args.old: # Trump Tax Rates
-    federal_tax.value = federal_tax.calc(args.income)
+    federal_tax.value = federal_tax.calc(taxable_income)
     tax_list.extend([federal_tax])
 else: # Obama Tax Rates
-    old_federal_tax.value = old_federal_tax.calc(args.income)
+    old_federal_tax.value = old_federal_tax.calc(taxable_income)
     tax_list.extend([old_federal_tax])
 
 if args.fica: # Social Security and Medicare
@@ -139,14 +142,15 @@ for tax in tax_list:
 
 # net income after taxes
 total_taxes = sum(map(lambda tax: tax.value, tax_list))
-net_income = args.income - total_taxes
+net_income = taxable_income - total_taxes
 
 # calc trump tax plan savings
-savings = old_federal_tax.calc(args.income) - federal_tax.calc(args.income)
+savings = old_federal_tax.calc(taxable_income) - federal_tax.calc(taxable_income)
 
 # tax report
 print("") # break
 print("income: {0:.2f}".format(args.income))
+print("retirement: {0:.2f}".format(args.retirement))
 print("total taxes: {0:.2f}".format(total_taxes))
 print("trump plan savings: {0:.2f}".format(savings))
 print("effective tax rate: {0:.2f}%".format(100 * total_taxes / args.income))
